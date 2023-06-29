@@ -13,8 +13,8 @@ const Login = () => {
         <a href="#">Forgot Password</a><br>
         <a href="#">Don,t Have An Account?</a>
     </form>
-</div>
-</>;
+   </div>
+ </>;
 };
 
 export default Login;
