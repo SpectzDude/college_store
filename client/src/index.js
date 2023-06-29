@@ -2,7 +2,6 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { PersistGate } from "reduxjs-toolkit-persist/integration/react";
-
 import { Provider } from "react-redux";
 import { persister, store } from "./utils/store";
 import { CssBaseline } from "@mui/material";
