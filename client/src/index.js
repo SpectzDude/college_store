@@ -4,7 +4,7 @@ import "./index.css";
 import { PersistGate } from "reduxjs-toolkit-persist/integration/react";
 
 import { Provider } from "react-redux";
-import { persister, store } from "./Utils/store";
+import { persister, store } from "./utils/store";
 import { CssBaseline } from "@mui/material";
 import ReactNotifications from "./modules/common/component/ReactNotification";
 import PermittedRoutes from "./PermittedRoutes";
