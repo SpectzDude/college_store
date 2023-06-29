@@ -3,7 +3,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors'
-import employeeRouter from './routes/employee.js';
+import employeeRouter from './routes/studentRouter.js';
 import hrRouter from './routes/hr.js';
 import adminRouter from "./routes/admin.js"
 import mongoose from "mongoose"
@@ -19,26 +19,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use('/', employeeRouter);
+app.use('/', studentRouter);
 app.use('/hr', hrRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.json({ message: err.message});
+  res.json({ message: err.message });
 });
 mongoose.connect(CONNECTION_URL)
-.then(()=>{ console.log("DB Connected"); app.listen(port, ()=> console.log("server running on port " + port)) })
-.catch((err)=> console.log("Error connecting DB \n" + err.message))
+  .then(() => { console.log("DB Connected"); app.listen(port, () => console.log("server running on port " + port)) })
+  .catch((err) => console.log("Error connecting DB \n" + err.message))
 
