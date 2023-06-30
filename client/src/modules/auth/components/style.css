@@ -89,8 +89,20 @@ nav {
 }
 
 
+
+.projectContainer {
+   display: flex;
+   height: 100vh;
+   justify-content: center;
+   align-items: center;
+   padding: 10px;
+   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1)), url(mcbg.jpg);
+   background-size: cover;
+   font-family: 'Poppins', sans-serif;
+}
+
 .container {
-   max-width: 700px;
+   max-width: 400px;
    width: 100%;
    background: #fff;
    padding: 25px 30px;

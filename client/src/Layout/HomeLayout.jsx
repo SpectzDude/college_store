@@ -13,6 +13,7 @@ const HomeLayout = ({ children }) => {
             <SideBar />
             <Box sx={{ flexGrow: 1, overflowX: "auto", display: "flex", flexDirection: "column", justifyContent: "space-between", height: "calc(100vh - 82px) !important ", width: "100%", overflowY: "auto" }}>
                 <Box
+
                     sx={{ bgcolor: "white.main", borderRadius: "20px", flexGrow: 1 }}
                 >
                     {children}
