@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import { registerAsync } from "../actions";
 import "./style.css";
 import cover from "./mcbg.jpg";
 import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { actions as commonSliceActions } from "../../common/slice";
 
 export const stylesContainer = {
   backgroundImage: `url(${cover})`,
@@ -16,6 +19,12 @@ export const stylesContainer = {
 };
 
 const Register = (props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(commonSliceActions.setNavigator(navigate));
+  }, []);
+
   const { submit } = props;
   const formik = useFormik({
     initialValues: {
@@ -25,7 +34,8 @@ const Register = (props) => {
       phoneNumber: "",
       password: "",
       confirmPassword: "",
-      gender: ""
+      gender: "",
+      collegeId: ""
     },
     onSubmit: (values) => {
       submit(values);
@@ -74,6 +84,16 @@ const Register = (props) => {
               type="text"
               onChange={formik.handleChange}
               value={formik.values?.phoneNumber}
+            />
+          </div>
+          <div className="input-box">
+            <label htmlFor="collegeId">College Id</label>
+            <input
+              id="collegeId"
+              name="collegeId"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values?.collegeId}
             />
           </div>
           <div className="input-box">

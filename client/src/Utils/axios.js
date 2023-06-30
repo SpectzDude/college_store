@@ -14,7 +14,7 @@ export const makeApiCall = (dispatch, endpoint, data, actionTypes, method = "POS
     if (token) {
         authHeaders = { Authorization: `Bearer ${bearerToken}` };
     }
-    let headers = { ...authHeaders, ...HTTP_CONSTANTS.HTTP_HEADERS, ...additionHeaders }
+    let headers = { ...authHeaders, ...HTTP_CONSTANTS.HTTP_HEADERS, ...additionHeaders };
     const [requestActionType, successActionType, failureActionType] = actionTypes;
     return new Promise((resolve) => {
         dispatch({ type: requestActionType });
@@ -32,7 +32,8 @@ export const makeApiCall = (dispatch, endpoint, data, actionTypes, method = "POS
             })
             .catch((error) => {
                 dispatch({ type: failureActionType, payload: error.message });
-                dispatch(errorNotify({ title: "ERROR", message: error.message }));
+                const { response: { data: { message } = {}, statusText } = {} } = error;
+                dispatch(errorNotify({ title: statusText || "ERROR", message: message }));
             });
     });
 };

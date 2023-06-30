@@ -14,7 +14,6 @@ dotenv.config()
 const app = express();
 const CONNECTION_URL = process.env.MONGODB_CONNECTION || "mongodb://localhost:27017/college_store";
 
-console.log("ajmal", process.env.MONGODB_CONNECTION)
 const port = 4000;
 
 app.use(cors())

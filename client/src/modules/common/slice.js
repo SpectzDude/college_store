@@ -13,7 +13,10 @@ const slice = createSlice({
     initialState,
     name: STATE_REDUCER_KEY,
     reducers: {
-        clearAll: () => initialState
+        clearAll: () => initialState,
+        setNavigator: (state, { payload = null }) => {
+            state.navigator = payload;
+        }
     }
 });
 

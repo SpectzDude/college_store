@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { stylesContainer } from "./Register";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { actions as commonSliceActions } from "../../common/slice";
 const Login = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(commonSliceActions.setNavigator(navigate));
+    }, []);
+
     return <div style={stylesContainer}>
         <div className="">
             <div className="loginbox">

@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import jwt from "jsonwebtoken";
 import { ERROR_MSG, ERROR_CODE } from "../config/messages.js";
+import User from "../models/User.js";
 
 const config = process.env;
 // TODO :- check JWT_SECRET

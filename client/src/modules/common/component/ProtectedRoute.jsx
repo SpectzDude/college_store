@@ -2,11 +2,10 @@
 import React from "react";
 import { useLocation } from "react-router";
 import Navigate from "./Navigate";
-// import { STORAGE_KEYS } from "../constants";
+import { STORAGE_KEYS } from "../constants";
 
 export const PrivateRoute = ({ children }) => {
-    // let hasToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
-    let hasToken = true;
+    let hasToken = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
     const location = useLocation();
     return hasToken ? (
         <>{children}</>
