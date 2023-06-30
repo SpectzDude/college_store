@@ -1,6 +1,9 @@
 import React from "react";
+import { useFormik } from "formik";
+import { registerAsync } from "../actions";
 import "./style.css";
 import cover from "./mcbg.jpg";
+import { connect } from "react-redux";
 
 export const stylesContainer = {
   backgroundImage: `url(${cover})`,
@@ -12,55 +15,100 @@ export const stylesContainer = {
   height: "100vh"
 };
 
-const Register = () => {
+const Register = (props) => {
+  const { submit } = props;
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      userName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+      gender: ""
+    },
+    onSubmit: (values) => {
+      submit(values);
+    }
+  });
   return <div style={stylesContainer}>
     <div className="container">
       <div className="title"><b>Registration Form</b></div>
-      <form >
-        <div className="user-details">
+      <form onSubmit={formik.handleSubmit}>
+        <div className="details">
           <div className="input-box">
-            <span className="details">Full Name</span>
-            <input type="text" placeholder="Enter Your Name" required />
+            <label htmlFor="fullName">Full Name</label>
+            <input
+              id="fullName"
+              name="fullName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values?.fullName}
+            />
           </div>
           <div className="input-box">
-            <span className="details">User-Name</span>
-            <input type="text" placeholder="Enter Your User-Name" required />
+            <label htmlFor="fullName">User Name</label>
+            <input
+              id="userName"
+              name="userName"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values?.userName}
+            />
           </div>
           <div className="input-box">
-            <span className="details">E-Mail</span>
-            <input type="text" placeholder="Enter Your E-Mail" required />
+            <label htmlFor="email">Email </label>
+            <input
+              id="email"
+              name="email"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values?.email}
+            />
           </div>
           <div className="input-box">
-            <span className="details">Phone Number</span>
-            <input type="text" placeholder="Enter Your Phone Number" required />
+            <label htmlFor="phoneNumber">Phone Number</label>
+            <input
+              id="phoneNumber"
+              name="phoneNumber"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values?.phoneNumber}
+            />
           </div>
           <div className="input-box">
-            <span className="details">Password</span>
-            <input type="text" placeholder="Enter Your Password" required />
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values?.password}
+            />
           </div>
           <div className="input-box">
-            <span className="details">Confirm Password</span>
-            <input type="text" placeholder="Confirm Your Password" required />
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="text"
+              onChange={formik.handleChange}
+              value={formik.values?.confirmPassword}
+            />
           </div>
-        </div>
-        <div className="gender-details">
-          <input type="radio" name="gender" id="dot-1" />
-          <input type="radio" name="gender" id="dot-2" />
-          <input type="radio" name="gender" id="dot-3" />
-          <span className="gender-details">Gender</span>
-          <div className="category">
-            <label htmlFor="dot-1">
-              <span className="dot one"></span>
-              <span className="gender">Male</span>
-            </label>
-            <label htmlFor="dot-2">
-              <span className="dot two"></span>
-              <span className="gender">Female</span>
-            </label>
-            <label htmlFor="dot-3">
-              <span className="dot three"></span>
-              <span className="gender">Prefer Not To Say</span>
-            </label>
+          <div className="input-box">
+            <label htmlFor="gender">Gender</label>
+            <select
+              id="gender"
+              name="gender"
+              onChange={formik.handleChange}
+              value={formik.values.gender}
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
           </div>
         </div>
         <div className="button">
@@ -70,5 +118,10 @@ const Register = () => {
     </div >
   </div>;
 };
+const mapDispatchToProps = (dispatch) => ({
+  submit: data => dispatch(registerAsync(data))
+});
 
-export default Register;
+const ConnectedRegister = connect(null, mapDispatchToProps)(Register);
+
+export default ConnectedRegister;
