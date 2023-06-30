@@ -39,7 +39,35 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({ message: err.message });
 });
-mongoose.connect(CONNECTION_URL)
-  .then(() => { console.log("DB Connected"); app.listen(port, () => console.log("server running on port " + port)) })
-  .catch((err) => console.log("Error connecting DB \n" + err.message))
+mongoose
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    // Check if the database already exists
+    const db = mongoose.connection.db;
+    db.listCollections({ name: 'college_store' }).toArray((err, collections) => {
+      if (err) {
+        console.log('Error checking database existence:', err);
+        return;
+      }
+
+      if (collections.length > 0) {
+        console.log('DB Connected');
+        app.listen(port, () => console.log("Server running on port " + port));
+      } else {
+        // Create the new database
+        db.createCollection('college_store', (err, result) => {
+          if (err) {
+            console.log('Error creating database:', err);
+            return;
+          }
+          console.log('New database created');
+          app.listen(port, () => console.log("Server running on port " + port));
+        });
+      }
+    });
+  })
+  .catch((err) => console.log("Error connecting DB \n" + err.message));
 
