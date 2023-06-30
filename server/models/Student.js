@@ -1,4 +1,5 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
+
 const studentSChema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -8,11 +9,17 @@ const studentSChema = mongoose.Schema({
         type: String,
         required: true
     },
-    orderItems: {
-
-    },
-
-
+    orderItems: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Order",
+        }
+    ],
+    approvedStatus: {
+        type: Boolean,
+        default: false,
+        require: true
+    }
 
 })
 const Student = mongoose.model('Student', studentSChema)

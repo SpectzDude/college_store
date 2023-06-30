@@ -4,12 +4,16 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors'
 import employeeRouter from './routes/studentRouter.js';
-import hrRouter from './routes/hr.js';
+import authRouter from './routes/authRouter.js';
 import adminRouter from "./routes/admin.js"
+import studentRouter from './routes/studentRouter.js';
 import mongoose from "mongoose"
+import dotenv from "dotenv";
 
+dotenv.config()
 const app = express();
-const CONNECTION_URL = "mongodb://localhost:27017/hr-management";
+const CONNECTION_URL = process.env.MONGODB_CONNECTION || "mongodb://localhost:27017/college_store";
+
 const port = 4000;
 
 app.use(cors())
@@ -20,7 +24,7 @@ app.use(cookieParser());
 
 
 app.use('/', studentRouter);
-app.use('/hr', hrRouter);
+app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
@@ -38,7 +42,35 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({ message: err.message });
 });
-mongoose.connect(CONNECTION_URL)
-  .then(() => { console.log("DB Connected"); app.listen(port, () => console.log("server running on port " + port)) })
-  .catch((err) => console.log("Error connecting DB \n" + err.message))
+mongoose
+  .connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    // Check if the database already exists
+    const db = mongoose.connection.db;
+    db.listCollections({ name: 'college_store' }).toArray((err, collections) => {
+      if (err) {
+        console.log('Error checking database existence:', err);
+        return;
+      }
+
+      if (collections.length > 0) {
+        console.log('DB Connected');
+        app.listen(port, () => console.log("Server running on port " + port));
+      } else {
+        // Create the new database
+        db.createCollection('college_store', (err, result) => {
+          if (err) {
+            console.log('Error creating database:', err);
+            return;
+          }
+          console.log('New database created');
+          app.listen(port, () => console.log("Server running on port " + port));
+        });
+      }
+    });
+  })
+  .catch((err) => console.log("Error connecting DB \n" + err.message));
 
