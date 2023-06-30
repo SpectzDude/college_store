@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "npm i && nodemon index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

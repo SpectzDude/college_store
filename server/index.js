@@ -4,8 +4,9 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors'
 import employeeRouter from './routes/studentRouter.js';
-import hrRouter from './routes/hr.js';
+import authRouter from './routes/authRouter.js';
 import adminRouter from "./routes/admin.js"
+import studentRouter from './routes/studentRouter.js';
 import mongoose from "mongoose"
 
 const app = express();
@@ -20,7 +21,7 @@ app.use(cookieParser());
 
 
 app.use('/', studentRouter);
-app.use('/hr', hrRouter);
+app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
