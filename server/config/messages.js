@@ -10,3 +10,8 @@ export const SUCCESS_MESSAGE = {
     CREATED: "Created Successfully",
     UPDATED: "Updated Successfully"
 };
+
+export const ERROR_CODE = {
+    INVALID_TOKEN: 9401,
+    TOKEN_REQUIRED: 9402
+};

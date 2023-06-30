@@ -10,7 +10,7 @@ import studentRouter from './routes/studentRouter.js';
 import mongoose from "mongoose"
 
 const app = express();
-const CONNECTION_URL = "mongodb://localhost:27017/hr-management";
+const CONNECTION_URL = "mongodb://localhost:27017/college_store";
 const port = 4000;
 
 app.use(cors())

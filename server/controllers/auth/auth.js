@@ -1,7 +1,6 @@
-import mongoose from "mongoose"
 import bcrypt from "bcrypt"
-import User from "../../models/User";
-import { ERROR_MSG } from "../../config/messages";
+import User from "../../models/User.js";
+import { ERROR_MSG } from "../../config/messages.js";
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
@@ -21,7 +20,7 @@ export const login = async (req, res) => {
 export const register = async (req, res) => {
     // const { error = {}, value = {} } = registerValidator(req.body);
     // if (error) return res.status(400).json({ message: error.details });
-    const { email, password } = req.body;
+    const { email, password, } = req.body;
     const credentials = _.cloneDeep(req.body);
     const profileDetails = _.omit(credentials, ["password"]);
     try {
