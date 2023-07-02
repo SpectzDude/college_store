@@ -1,6 +1,7 @@
 import express from 'express';
-import { getProfile } from "../controllers/student/student.js"
+import { buyNow, getProducts } from "../controllers/student/student.js"
 const router = express.Router();
 
-router.get('/profile', getProfile);
+router.get('/products', getProducts);
+router.post('/buy-now', buyNow)
 export default router;

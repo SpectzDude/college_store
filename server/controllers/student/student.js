@@ -1,31 +1,44 @@
-import bcrypt from "bcrypt"
+import Orders from "../../models/Orders.js";
+import Products from "../../models/Products.js";
 import Student from "../../models/Student.js";
 
-export const getProfile = (async (req, res) => {
-    const user = req.user;
+export const getProducts = (async (req, res) => {
     try {
-        const userExists = await Student.findOne({ _id: user._id })
-        if (!userExists) return res.status(404).json({ message: "user doesn't exists" })
-        const studentExists = await Student.findOne({ _id: user._id })
-        let result1 = _.omit(userExists, ["password"]);
-        res.status(200).json({ result1 })
+        const products = await Products.find()
+        if (!products) return res.status(404).json({ message: "No products in the list" })
+        res.status(200).json({ data: products })
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
     }
 })
 
-export const login = async (req, res) => {
-    console.log(req.body)
-    const { email, password } = req.body;
+
+export const buyNow = (async (req, res) => {
+    const userId = req.userId
+    const { _id: productId } = req.body;
     try {
-        const userExists = await User.findOne({ email })
-        console.log(userExists)
-        if (!userExists) return res.status(404).json({ message: "user dosen't exists" })
-        const isPassword = await bcrypt.compare(password, userExists.password)
-        if (!isPassword) return res.status(403).json({ message: "invalid credentials" })
-        console.log(userExists)
+        const student = await Student.findOne({ user: userId })
+        const currDate = dateToEpoch(new Date())
+        await Orders.create({ studentId: student._id, productId, date: currDate });
+        const product = await Products.findOne({ _id: productId });
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" })
+        } else {
+            if (product.stock > 0) {
+                product.stock -= 1;
+
+            } else {
+                if (product.stock === 0) {
+                    product.preBookedCount += 1;
+                }
+            }
+            await product.save();
+            res.status(200).json({ data: product })
+        }
 
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
     }
-}
+})
+
+

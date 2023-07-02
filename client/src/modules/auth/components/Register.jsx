@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { actions as commonSliceActions } from "../../common/slice";
+import { Box, Typography } from "@mui/material";
 
 export const stylesContainer = {
   backgroundImage: `url(${cover})`,
@@ -135,6 +136,11 @@ const Register = (props) => {
           <input type="submit" value="Register" />
         </div>
       </form >
+      <Box>
+        <Typography variant="p" display="inline"> Already have an account? </Typography>
+        <Typography onClick={() => navigate("../login")} variant="p" sx={{ color: "blue", cursor: "pointer" }} display="inline">  Login </Typography>
+      </Box>
+
     </div >
   </div>;
 };

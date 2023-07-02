@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use('/', studentRouter);
+app.use('/student', studentRouter);
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 

@@ -17,7 +17,7 @@ export const verifyToken = async (req, res, next) => {
         const user = await User.findOne({ _id: userId });
         if (!user) return res.status(404).json(ERROR_MSG.USER_NOT);
         if (!user.status) return res.status(401).json({ message: "User blocked from accessing resources" });
-        req.user = userId;
+        req.userId = userId;
         next();
     } catch (error) {
         res.status(401).json({ message: error.message });

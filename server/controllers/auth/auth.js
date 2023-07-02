@@ -37,7 +37,7 @@ export const register = async (req, res) => {
         }
         const isExists = await User.findOne({ email });
         if (isExists) return res.status(409).json({ message: ERROR_MSG.ALREADY_EXISTS });
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 1);
         const result = await User.create({ ...profileDetails, password: hashedPassword });
         const student = await Student.create({ user: result._id, collegeId: collegeId });
         if (!result) return res.status(400).json({ message: ERROR_MSG.PROFILE_NOT });
