@@ -1,12 +1,20 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-    preBookedCount: Number,
+    preBookedCount: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
     title: String,
     description: String,
     price: Number,
     discountPercentage: Number,
-    stock: Number,
+    stock: {
+        type: Number,
+        default: 2,
+        required: true,
+    },
     brand: String,
     category: String,
     thumbnail: String,

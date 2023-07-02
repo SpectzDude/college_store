@@ -4,10 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "npm i && nodemon index.js"
+    "start": "npm i && nodemon index.js",
+    "clean": "npm cache clean --force"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "casual": "^1.6.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",

@@ -1,9 +1,8 @@
-import  express from 'express';
+import express from 'express';
+import { addDummyProducts, addProducts } from '../controllers/admin/admin.js';
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.send("admin");
-});
+router.post('/add-product', addProducts);
+router.post('/add-dummy', addDummyProducts);
 
 export default router;

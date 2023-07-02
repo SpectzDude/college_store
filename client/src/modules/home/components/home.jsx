@@ -4,17 +4,16 @@ import React, { useEffect } from "react";
 import Header from "../../../common/components/Header";
 import ItemCard from "../../../common/components/ItemCard";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { fetchProductList } from "../actions";
+import { getProducts } from "../selectors";
 
 const UserHome = (props) => {
-    const { items = [] } = props;
-    const dispatch = useDispatch();
+    const { items = [], fetchProductListAsync } = props;
     const theme = useTheme();
     const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
-
     useEffect(() => {
-        dispatch(fetchProductList());
+        fetchProductListAsync();
     }, []);
     return <Box>
         <Box m="20px">
@@ -25,7 +24,7 @@ const UserHome = (props) => {
                 alignItems={smScreen ? "center" : "start"}
                 m="10px 0"
             >
-                <Header title="College Store" subtitle="All students stuffs here you can buy from" />
+                <Header title="Products" subtitle="All student items available for purchase here" />
                 <Box>
                 </Box>
             </Box>
@@ -35,7 +34,7 @@ const UserHome = (props) => {
                     return <Grid key={idx} item xs={12} sm={12} md={6} lg={4} xl={4}>
                         <Box
                             width="100%"
-                            backgroundColor="lightblue"
+                            backgroundColor="primary"
                             display="flex"
                             alignItems="center"
                             justifyContent="center"
@@ -44,7 +43,7 @@ const UserHome = (props) => {
                                 boxShadow: "gray 0px 3px 8px",
                                 transition: "transform 300ms ease-out",
                                 "&:hover": {
-                                    backgroundColor: "blue",
+                                    backgroundColor: "secondary",
                                     cursor: "pointer",
                                     transform: "scale(1.05)"
                                 }
@@ -55,9 +54,9 @@ const UserHome = (props) => {
                                 brand={item.brand}
                                 subtitle={item.category}
                                 discountPercentage={item.discountPercentage}
-                                rating={item.rating}
                                 description={item.description}
                                 price={item.price}
+                                stock={item.stock}
                                 imageUrl={item.thumbnail}
                                 icon={
                                     <PhoneAndroidIcon
@@ -65,7 +64,10 @@ const UserHome = (props) => {
                                     />
                                 }
                             />
-                            <Button> Buy Now </Button>
+                            {item.stock > 0 ?
+                                <Button variant="contained" sx={{ color: "white", bgcolor: "#6262ff" }}> Buy Now </Button> :
+                                <Button variant="contained" sx={{ color: "white", bgcolor: "#4d4d4d" }}> Pre Order </Button>}
+
                         </Box>
                     </Grid>;
                 })}
@@ -73,5 +75,17 @@ const UserHome = (props) => {
         </Box>
     </Box>;
 };
+const mapStateToProps = (state) => {
+    return {
+        items: getProducts(state)
+    };
+};
 
-export default UserHome;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchProductListAsync: () => dispatch(fetchProductList())
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserHome);

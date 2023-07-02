@@ -2,7 +2,7 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import Discount from "./Discount";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const ItemCard = ({ title = "", brand = "", subtitle = "", discountPercentage, icon, imageUrl = "", description = "", price = "" }) => {
+const ItemCard = ({ title = "", brand = "", subtitle = "", stock = 0, discountPercentage, icon, imageUrl = "", description = "", price = "" }) => {
 
 
   return (
@@ -24,7 +24,7 @@ const ItemCard = ({ title = "", brand = "", subtitle = "", discountPercentage, i
           <Typography
             variant="h4"
             fontWeight="bold"
-            sx={{ color: "lightgray" }}
+            sx={{ color: "black" }}
           >
             {title}
           </Typography>
@@ -35,10 +35,12 @@ const ItemCard = ({ title = "", brand = "", subtitle = "", discountPercentage, i
           >
             {`$ ${price}`}
           </Typography>
+          <Box sx={{ display: "flex", width: "120px", height: "10px" }}>
+            {stock ? <Typography sx={{ color: "green" }}> Available </Typography> : <Typography sx={{ color: "gray" }}> Out of stock </Typography>}</Box>
           <Typography
             variant="p"
             fontWeight="bold"
-            sx={{ color: "lightgray" }}
+            sx={{ color: "#5a5a5a" }}
           >
             Manufacturer :
           </Typography>
@@ -46,7 +48,7 @@ const ItemCard = ({ title = "", brand = "", subtitle = "", discountPercentage, i
             variant="h6"
             fontWeight="bold"
             display="inline"
-            sx={{ color: "lightgray" }}
+            sx={{ color: "#5a5a5a" }}
           >
             {brand}
           </Typography>
@@ -57,10 +59,10 @@ const ItemCard = ({ title = "", brand = "", subtitle = "", discountPercentage, i
       </Box>
       <Box display="flex" justifyContent="space-between" mt="2px">
         <Box>
-          <Typography variant="h6" display="inline" sx={{ color: "lightgray" }}>
+          <Typography variant="h6" display="inline" sx={{ color: "#5a5a5a" }}>
             Category :
           </Typography>
-          <Typography display="inline" variant="p" sx={{ color: "lightgray" }}>
+          <Typography display="inline" variant="p" sx={{ color: "#5a5a5a" }}>
             {subtitle}
           </Typography>
         </Box>
