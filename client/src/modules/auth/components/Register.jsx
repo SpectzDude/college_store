@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { actions as commonSliceActions } from "../../common/slice";
-import { Box, Typography } from "@mui/material";
-
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import UserLogo from "./user.png";
 export const stylesContainer = {
   backgroundImage: `url(${cover})`,
   backgroundSize: "cover",
@@ -16,7 +16,8 @@ export const stylesContainer = {
   display: "flex",
   justifyContent: "center",
   alignContent: "center",
-  height: "100vh"
+  height: "100vh",
+  paddingTop: "40px"
 };
 
 const Register = (props) => {
@@ -29,120 +30,130 @@ const Register = (props) => {
   const { submit } = props;
   const formik = useFormik({
     initialValues: {
-      fullName: "",
-      userName: "",
-      email: "",
-      phoneNumber: "",
-      password: "",
-      confirmPassword: "",
-      gender: "",
-      collegeId: ""
+      fullName: "student",
+      userName: "st1",
+      email: "student@test.com",
+      phoneNumber: "1111",
+      password: "222",
+      confirmPassword: "222",
+      gender: "male",
+      collegeId: "555"
     },
     onSubmit: (values) => {
       submit(values);
     }
   });
-  return <div style={stylesContainer}>
-    <div className="container">
-      <div className="title"><b>Registration Form</b></div>
+  return <Box style={stylesContainer}>
+    <Box sx={{ position: "absolute" }}>
+      <Box sx={{ position: "relative", top: "-40px", left: "5px" }}>
+        <img src={UserLogo} alt="logo" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
+      </Box>
+    </Box>
+    <Box sx={{ display: "flex", borderRadius: "10px", bgcolor: "secondary.main", flexDirection: "column", p: 3, height: "80vh", overflowY: "scroll" }}>
+      <Typography variant="h2" py={2}>Registration Form</Typography>
       <form onSubmit={formik.handleSubmit}>
         <div className="details">
           <div className="input-box">
-            <label htmlFor="fullName">Full Name</label>
-            <input
+            <TextField
               id="fullName"
               name="fullName"
+              label="Full Name"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values?.fullName}
+              value={formik.values.fullName}
             />
           </div>
           <div className="input-box">
-            <label htmlFor="fullName">User Name</label>
-            <input
+            <TextField
               id="userName"
               name="userName"
+              label="User Name"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values?.userName}
+              value={formik.values.userName}
             />
           </div>
           <div className="input-box">
-            <label htmlFor="email">Email </label>
-            <input
+            <TextField
               id="email"
               name="email"
+              label="Email"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values?.email}
+              value={formik.values.email}
             />
           </div>
           <div className="input-box">
-            <label htmlFor="phoneNumber">Phone Number</label>
-            <input
+            <TextField
               id="phoneNumber"
               name="phoneNumber"
+              label="Phone Number"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values?.phoneNumber}
+              value={formik.values.phoneNumber}
             />
           </div>
           <div className="input-box">
-            <label htmlFor="collegeId">College Id</label>
-            <input
+            <TextField
               id="collegeId"
               name="collegeId"
+              label="College ID"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values?.collegeId}
+              value={formik.values.collegeId}
             />
           </div>
           <div className="input-box">
-            <label htmlFor="password">Password</label>
-            <input
+            <TextField
               id="password"
               name="password"
-              type="text"
+              label="Password"
+              type="password"
               onChange={formik.handleChange}
-              value={formik.values?.password}
+              value={formik.values.password}
             />
           </div>
           <div className="input-box">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
+            <TextField
               id="confirmPassword"
               name="confirmPassword"
-              type="text"
+              label="Confirm Password"
+              type="password"
               onChange={formik.handleChange}
-              value={formik.values?.confirmPassword}
+              value={formik.values.confirmPassword}
             />
           </div>
           <div className="input-box">
-            <label htmlFor="gender">Gender</label>
-            <select
-              id="gender"
-              name="gender"
-              onChange={formik.handleChange}
-              value={formik.values.gender}
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
+            <FormControl>
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Select
+                id="gender"
+                name="gender"
+                labelId="gender-label"
+                value={formik.values.gender}
+                onChange={formik.handleChange}
+              >
+                <MenuItem value="">Select Gender</MenuItem>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
           </div>
         </div>
         <div className="button">
-          <input type="submit" value="Register" />
+          <Button variant="contained" color="primary" type="submit">
+            Register
+          </Button>
         </div>
-      </form >
+      </form>
       <Box>
         <Typography variant="p" display="inline"> Already have an account? </Typography>
         <Typography onClick={() => navigate("../login")} variant="p" sx={{ color: "blue", cursor: "pointer" }} display="inline">  Login </Typography>
       </Box>
+    </Box>
+  </Box >;
 
-    </div >
-  </div>;
 };
 const mapDispatchToProps = (dispatch) => ({
   submit: data => dispatch(registerAsync(data))

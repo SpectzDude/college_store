@@ -1,6 +1,7 @@
 
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, IconButton } from "@mui/material";
+import { LogoutOutlined } from "@mui/icons-material";
 
 const Header = () => {
     //, "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" }
@@ -8,7 +9,7 @@ const Header = () => {
     return (
         <Grid
             component="header"
-            sx={{ backgroundColor: "secondary", pb: 0.4, width: "100%", height: "83px", position: "sticky", top: 0, zIndex: 100, display: "flex", justifyContent: "space-between", alignItems: "center" }}
+            sx={{ backgroundColor: "secondary.main", pb: 0.4, width: "100%", height: "83px", position: "sticky", top: 0, zIndex: 100, display: "flex", justifyContent: "space-between", alignItems: "center" }}
         >
             <Box
                 sx={{
@@ -21,7 +22,12 @@ const Header = () => {
                         {/* <img width={58} height={55} src={companyLogo} alt="logo" /> */}
                     </Box>
                 </Box>
-
+            </Box>
+            <Box sx={{ position: "relative", left: "-15px" }}>
+                <IconButton>
+                    <LogoutOutlined />
+                    Logout
+                </IconButton>
             </Box>
         </Grid >
     );

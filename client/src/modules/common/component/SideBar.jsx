@@ -17,10 +17,10 @@ export let inActive = {
     display: "flex",
     justifyContent: "space-evenly",
     color: "grey.main",
-    bgcolor: "secondary.main",
+    bgcolor: "background",
     "&:hover": {
-        color: "secondary.main",
-        bgcolor: "primary.dark"
+        color: "neutral.dark",
+        bgcolor: "grey.light"
     }
 };
 const SideBar = () => {
@@ -40,7 +40,7 @@ const SideBar = () => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
-        backgroundColor: "blue",
+        backgroundColor: "primary.light",
         fontSize: "14px",
         transition: "width ease-in-out 300ms",
         py: 0

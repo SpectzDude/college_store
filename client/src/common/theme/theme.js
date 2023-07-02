@@ -72,6 +72,7 @@ export const themeSettings = () => {
     return {
         palette: {
             primary: {
+                light: colors.primary[200],
                 main: colors.primary[100]
             },
             secondary: {
@@ -84,6 +85,9 @@ export const themeSettings = () => {
             },
             background: {
                 default: "#fcfcfc"
+            },
+            blue: {
+                light: colors.blueAccent[800]
             }
         },
         typography: {
