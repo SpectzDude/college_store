@@ -1,6 +1,6 @@
 import * as auth from "./auth";
 import * as common from "./common";
 import * as home from "./home";
-
-export { auth, common, home };
+import * as orders from "./orders";
+export { auth, common, home, orders };
 

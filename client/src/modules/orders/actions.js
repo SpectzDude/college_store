@@ -1,14 +1,13 @@
 import { createAction } from "@reduxjs/toolkit";
 import { ACTION_TYPES } from "./actionTypes";
-import { loginApi, registerApi } from "./api";
+import { loginApi, ordersListApi } from "./api";
 import { getNavigator } from "../common/selectors";
 
-export const login = createAction(ACTION_TYPES.LOGIN);
 
-export const registerAsync = (data) => {
+export const fetchOrdersList = () => {
     return async (dispatch, getState) => {
         try {
-            await registerApi(dispatch, data);
+            await ordersListApi(dispatch);
             const state = getState(); // Get the current state
             const navigator = getNavigator(state);
             navigator("/home");

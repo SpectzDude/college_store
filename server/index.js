@@ -9,6 +9,7 @@ import adminRouter from "./routes/admin.js"
 import studentRouter from './routes/studentRouter.js';
 import mongoose from "mongoose"
 import dotenv from "dotenv";
+import { verifyToken } from './middlewares/index.js';
 
 dotenv.config()
 const app = express();
@@ -22,10 +23,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-app.use('/student', studentRouter);
 app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
+app.use('/student', verifyToken, studentRouter);
+app.use('/admin', verifyToken, adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

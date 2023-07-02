@@ -12,7 +12,8 @@ export const login = async (req, res) => {
         const id = user._id.toString();
         const isPassword = await bcrypt.compare(password, user.password);
         if (!isPassword) return res.status(401).json({ messages: "Invalid Credential" });
-        const token = jwt.sign({ userId: id, email }, "secretKey", { expiresIn: "2h" });
+        console.log(" userId: id", id)
+        const token = jwt.sign({ userId: id }, "secretKey", { expiresIn: "2h" });
         res.status(200).json({ token });
     } catch (error) {
         res.status(500).json({ errorTitle: ERROR_MSG.SOMETHING_WENT, message: error.message });

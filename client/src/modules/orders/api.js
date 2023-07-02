@@ -1,17 +1,14 @@
-import { API, makeApiCall } from "../../utils/axios";
+import { makeApiCall } from "../../utils/axios";
 import { ACTION_TYPES } from "./actionTypes";
 
 
-export const login = (formData) => API.post("/auth/register", formData);
-
-export const registerApi = async (dispatch, data) => {
+export const ordersListApi = async (dispatch) => {
     try {
         await makeApiCall(
             dispatch,
-            "/auth/register",
-            data,
-            [ACTION_TYPES.REGISTER_REQUEST, ACTION_TYPES.REGISTER_SUCCESS, ACTION_TYPES.REGISTER_FAILURE],
-            "POST"
+            "/student/orders",
+            [ACTION_TYPES.FETCH_ORDERS_REQUEST, ACTION_TYPES.FETCH_ORDERS_SUCCESS, ACTION_TYPES.FETCH_ORDERS_FAILURE],
+            "GET"
         );
         // Handle success
     } catch (error) {

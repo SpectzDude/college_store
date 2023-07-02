@@ -5,6 +5,7 @@ import ErrorCatch from "./common/component/ErrorCatch";
 import { routes as auth } from "../modules/auth/routes";
 import UserHome from "./home/components/home";
 import { PrivateRoute } from "./common/component/ProtectedRoute";
+import OrderList from "./orders/components/OrdersList";
 
 const routes =
     [
@@ -31,6 +32,22 @@ const routes =
                     element:
                         <PrivateRoute>
                             <UserHome />
+                        </PrivateRoute>,
+                    errorElement: <ErrorCatch />
+                },
+                {
+                    path: "orders",
+                    element:
+                        <PrivateRoute>
+                            <OrderList />
+                        </PrivateRoute>,
+                    errorElement: <ErrorCatch />
+                },
+                {
+                    path: "orders/view",
+                    element:
+                        <PrivateRoute>
+                            <p>view order</p>
                         </PrivateRoute>,
                     errorElement: <ErrorCatch />
                 }

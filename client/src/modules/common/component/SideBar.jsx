@@ -57,9 +57,16 @@ const SideBar = () => {
                     </ListItemButton>
                 </List>
                 <List sx={{ px: 0.5, py: 0 }}>
-                    <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../items")}>
+                    <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../orders")}>
                         <ListAltOutlined />
                         <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Items"}</ListItemText>
+                    </ListItemButton>
+                </List>
+
+                <List sx={{ px: 0.5, py: 0 }}>
+                    <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../profile")}>
+                        <ListAltOutlined />
+                        <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"My Proflle"}</ListItemText>
                     </ListItemButton>
                 </List>
             </List>

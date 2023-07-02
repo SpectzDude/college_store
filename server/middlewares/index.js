@@ -12,7 +12,7 @@ export const verifyToken = async (req, res, next) => {
         if (!token) return res.status(401).json({ message: "Token Required for accessing this resource", errorCode: ERROR_CODE.TOKEN_REQUIRED });
         if (!token.length) return res.status(403).json({ message: "Invalid token", errorCode: ERROR_CODE.INVALID_TOKEN });
         token = token.split(" ")[1];
-        const decodedToken = jwt.verify(token, config.JWT_SECRET);
+        const decodedToken = jwt.verify(token, "secretKey");
         const { userId = "" } = decodedToken;
         const user = await User.findOne({ _id: userId });
         if (!user) return res.status(404).json(ERROR_MSG.USER_NOT);

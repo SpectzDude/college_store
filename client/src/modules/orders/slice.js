@@ -5,23 +5,9 @@ import { ACTION_TYPES } from "./actionTypes";
 import { STORAGE_KEYS } from "../common/constants";
 
 const initialState = {
-    signIn: {
+    orders: {
         requestInProgress: false,
-        data: {
-            email: "",
-            password: ""
-        }
-    },
-    signUp: {
-        confirm: false,
-        requestInProgress: false,
-        data: {
-            email: "",
-            password: "",
-            confirmPassword: "",
-            companyName: ""
-
-        }
+        data: []
     }
 
 };
