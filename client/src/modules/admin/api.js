@@ -19,7 +19,7 @@ export const createProductApi = async (dispatch, data) => {
     try {
         await makeApiCall(
             dispatch,
-            "/admin/products/create",
+            "/admin/add-product",
             [ACTION_TYPES.CREATE_PRODUCT, ACTION_TYPES.CREATE_PRODUCT_SUCCESS, ACTION_TYPES.CREATE_PRODUCT_FAILURE],
             "GET",
             data
@@ -31,13 +31,13 @@ export const createProductApi = async (dispatch, data) => {
 };
 
 export const editProducts = async (dispatch, data = {}) => {
-    const { _id } = data;
     try {
         await makeApiCall(
             dispatch,
-            `/admin/products/:${_id}`,
+            "/admin/products/",
             [ACTION_TYPES.EDIT_PRODUCT_REQUEST, ACTION_TYPES.EDIT_PRODUCT_SUCCESS, ACTION_TYPES.EDIT_PRODUCT_FAILURE],
-            "PATCH"
+            "PATCH",
+            data
         );
         // Handle success
     } catch (error) {
@@ -50,9 +50,24 @@ export const fetchProductByIdApi = async (dispatch, id) => {
     try {
         await makeApiCall(
             dispatch,
-            `/admin/products/:${id}`,
+            `/admin/products/${id}`,
             [ACTION_TYPES.FETCH_PRODUCT_BY_ID_REQUEST, ACTION_TYPES.FETCH_PRODUCT_BY_ID_SUCCESS, ACTION_TYPES.FETCH_PRODUCT_BY_ID_FAILURE],
             "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+//deleteProductByIdApi
+export const deleteProductByIdApi = async (dispatch, id) => {
+    try {
+        await makeApiCall(
+            dispatch,
+            `/admin/products/${id}`,
+            [ACTION_TYPES.DELETE_PRODUCT_BY_ID_REQUEST, ACTION_TYPES.DELETE_PRODUCT_BY_ID_SUCCESS, ACTION_TYPES.DELETE_PRODUCT_BY_ID_FAILURE],
+            "DELETE"
         );
         // Handle success
     } catch (error) {

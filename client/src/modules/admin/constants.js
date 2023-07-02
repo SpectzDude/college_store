@@ -38,13 +38,13 @@ export const TABLE_COLUMN = [
     },
     {
         id: "preBookedCount",
-        header: "PreBooking Received Status",
+        header: "Pre-Booking Received",
         accessorKey: "preBookedCount",
         size: 150
     },
     {
         id: "thumbnail",
-        header: "PRoduct Image",
+        header: "Product Image",
         accessorKey: "thumbnail",
         size: 150
     }

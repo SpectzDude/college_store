@@ -9,8 +9,10 @@ import { colors } from "../theme/theme";
 
 const DefaultLoader = () => {
     return <Box sx={{ display: "flex", px: 2, py: 1, justifyContent: "center", flexDirection: "column", borderRadius: "15px", backgroundColor: colors.grey[100] }}>
-        <Typography sx={{ fontWeight: 600, fontSize: "14px" }} color={"#fff"}>Fetching...</Typography>
-        <ScaleLoader color={"#fff"} speedMultiplier={1.9} />
+        <Box>
+            <Typography sx={{ fontWeight: 600, fontSize: "14px" }} color={"#fff"}>Data Loading...</Typography>
+            <ScaleLoader color={"#fff"} speedMultiplier={1.9} />
+        </Box>
     </Box>;
 };
 

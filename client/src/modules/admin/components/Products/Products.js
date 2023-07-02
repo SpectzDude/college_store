@@ -1,19 +1,19 @@
 import React, { useEffect, useMemo } from "react";
-import { actions as sliceActions } from "../slice";
+import { actions as sliceActions } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { fetchProductList } from "../actions";
-import { Filter1Rounded, ViewInArOutlined } from "@mui/icons-material";
-import { STATE_REDUCER_KEY, TABLE_COLUMN, productColList } from "../constants";
-import CustomListMenu from "../../../common/components/CustomListMenu";
-import { REACT_TABLE_COMMON_OPTIONS } from "../../common/constants";
-import CustomReactTable from "../../../common/components/CustomTable";
+import { deleteProd, fetchProductList } from "../../actions";
+import { AddCircleOutline, Delete, Edit, ViewCarousel } from "@mui/icons-material";
+import { STATE_REDUCER_KEY, TABLE_COLUMN, productColList } from "../../constants";
+import CustomListMenu from "../../../../common/components/CustomListMenu";
+import { REACT_TABLE_COMMON_OPTIONS } from "../../../common/constants";
+import CustomReactTable from "../../../../common/components/CustomTable";
 
 
 const Products = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { productList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].productList);
+    const { data: productList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].productList);
 
     // eslint-disable-next-line no-unused-vars
     const columns = useMemo(
@@ -25,10 +25,16 @@ const Products = () => {
         let customActions = [];
 
         if (item[1]) {
-            customActions.push({ title: "View", icon: <ViewInArOutlined fontSize="small" />, handleClick: () => navigate(`${row._id}/view`) });
+            customActions.push({ title: "View", icon: <ViewCarousel fontSize="small" />, handleClick: () => navigate(`${row.original._id}/view`) });
         }
         if (item[1]) {
-            customActions.push({ title: "Edit", icon: <ViewInArOutlined fontSize="small" />, handleClick: () => navigate(`${row._id}/edit`) });
+            customActions.push({ title: "Edit", icon: <Edit fontSize="small" />, handleClick: () => navigate(`${row.original._id}/edit`) });
+        }
+        if (item[1]) {
+            customActions.push({
+                title: "Delete", icon: <Delete fontSize="small" />,
+                handleClick: () => dispatch(deleteProd(row.original._id))
+            });
         }
         return customActions;
     };
@@ -51,7 +57,7 @@ const Products = () => {
 
 
     toolBarActions.push({
-        title: "Filters", icon: <Filter1Rounded />
+        title: "Create", icon: <AddCircleOutline fontSize="large" />, handleClick: () => navigate("../create")
     });
 
 

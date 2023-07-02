@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Products from "../../models/Products.js";
 
 import casual from 'casual';
@@ -39,6 +40,42 @@ export const addDummyProducts = async (req, res) => {
     try {
         const prod = await Products.create(dummyProduct);
         res.status(201).json({ data: prod })
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+}
+
+export const getProductById = async (req, res) => {
+    const _id = mongoose.Types.ObjectId(req.params.id);
+
+    try {
+        const prod = await Products.findOne({ _id });
+        res.status(200).json({ data: prod })
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+}
+
+export const updateProductById = async (req, res) => {
+    const { _id, ...updatedData } = req.body;
+
+    try {
+        const updatedProduct = await Products.findOneAndUpdate(
+            { _id },
+            updatedData,
+            { new: true })
+        res.status(201).json({ data: updatedProduct });
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+}
+//deleteProductById
+export const deleteProductById = async (req, res) => {
+    const _id = mongoose.Types.ObjectId(req.params.id);
+    try {
+        const result = await Products.findOneAndDelete({ _id });
+        if (!result) return res.status(404).json({ message: "Product not found in the list " })
+        res.status(200).json({ data: {} });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
     }

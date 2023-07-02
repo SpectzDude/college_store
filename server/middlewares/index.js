@@ -20,6 +20,10 @@ export const verifyToken = async (req, res, next) => {
         req.userId = userId;
         next();
     } catch (error) {
-        res.status(401).json({ message: error.message });
+        let code = ERROR_CODE.INVALID_TOKEN;
+        if (error.message === "jwt expired") {
+            code = ERROR_CODE.EXPIRED;
+        }
+        res.status(401).json({ message: error.message, errorCode: code });
     }
 };

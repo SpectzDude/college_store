@@ -6,3 +6,9 @@ export const HTTP_CONSTANTS = {
         "Cache-Control": "no-cache"
     }
 };
+
+export const ERROR_CODE = {
+    INVALID_TOKEN: 9401,
+    TOKEN_REQUIRED: 9402,
+    EXPIRED: 9403
+};

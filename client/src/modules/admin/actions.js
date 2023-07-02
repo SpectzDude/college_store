@@ -1,5 +1,5 @@
 import { errorNotify, successNotify } from "../../utils/repopUtils";
-import { createProductApi, editProducts, fetchAllProducts, fetchProductByIdApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi } from "./api";
 
 
 export const fetchProductList = () => {
@@ -39,6 +39,18 @@ export const fetchProductById = (data) => {
     return async (dispatch) => {
         try {
             await fetchProductByIdApi(dispatch, data);
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+export const deleteProd = (data) => {
+    return async (dispatch) => {
+        try {
+            await deleteProductByIdApi(dispatch, data);
+            dispatch(successNotify({ message: "Product Deleted" }));
+            dispatch(fetchProductList());
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }
