@@ -29,12 +29,16 @@ const SideBar = () => {
     const { isAdmin } = useSelector(state => state.common.user);
     let dashStyle = { ...inActive };
     let analyticsStyle = { ...inActive };
+    let profileStyle = { ...inActive };
 
     if (location.pathname === "/home") {
         dashStyle = { ...active };
     }
     if (location.pathname === "/orders") {
         analyticsStyle = { ...active };
+    }
+    if (location.pathname === "/profile") {
+        profileStyle = { ...active };
     }
 
     const mainStyle = {
@@ -89,7 +93,7 @@ const SideBar = () => {
                         </List>
 
                         <List sx={{ px: 0.5, py: 0 }}>
-                            <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../profile")}>
+                            <ListItemButton sx={{ ...profileStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../profile")}>
                                 <Person2Outlined />
                                 <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"My Proflle"}</ListItemText>
                             </ListItemButton>

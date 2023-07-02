@@ -23,7 +23,8 @@ const initialState = {
             price: "",
             stock: "",
             thumbnail: "",
-            title: ""
+            title: "",
+            category: ""
         }
     }
 

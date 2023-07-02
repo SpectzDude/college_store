@@ -6,7 +6,7 @@ const ItemCard = ({ title = "", brand = "", subtitle = "", stock = 0, discountPe
 
 
   return (
-    <Box width="100%" m="0 30px" p="12px 0">
+    <Box width="100%" m="0 30px" p="12px 12px">
       <Box display="flex" justifyContent="space-between">
         <Box>
           {imageUrl ? <Box

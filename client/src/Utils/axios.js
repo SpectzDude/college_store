@@ -35,12 +35,12 @@ export const makeApiCall = (dispatch, endpoint, actionTypes = ["REQUEST", "SUCCE
                 resolve(response.data);
             })
             .catch((error) => {
-                const { message, response: { status, statusText, data: { resultString, detail: errors = "", errorCode } = {} } = {} } = error;
+                const { message, response: { status, statusText, data: { message: apiMessage, detail: errors = "", errorCode } = {} } = {} } = error;
                 dispatch({ type: failureActionType, payload: error.message });
                 if (errorCode === ERROR_CODE.EXPIRED) {
                     dispatch(logout(false));
                 }
-                dispatch(errorNotify({ title: statusText || status || "ERROR", message: message || resultString || errors }));
+                dispatch(errorNotify({ title: statusText || status || message || "ERROR", message: apiMessage || errors }));
             });
     });
 };

@@ -21,7 +21,7 @@ export const createProductApi = async (dispatch, data) => {
             dispatch,
             "/admin/add-product",
             [ACTION_TYPES.CREATE_PRODUCT, ACTION_TYPES.CREATE_PRODUCT_SUCCESS, ACTION_TYPES.CREATE_PRODUCT_FAILURE],
-            "GET",
+            "POST",
             data
         );
         // Handle success

@@ -16,7 +16,7 @@ export const createProduct = (data) => {
     return async (dispatch) => {
         try {
             await createProductApi(dispatch, data);
-            dispatch(successNotify({ message: "Successfully Created" }));
+            dispatch(successNotify({ message: "Product Successfully Created" }));
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }
@@ -27,7 +27,7 @@ export const editProduct = (data) => {
     return async (dispatch) => {
         try {
             await editProducts(dispatch, data);
-            dispatch(successNotify({ message: "Successfully ordered" }));
+            dispatch(successNotify({ message: "Updating Success" }));
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }

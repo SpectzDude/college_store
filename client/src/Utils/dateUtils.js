@@ -8,3 +8,4 @@ export function dateToEpoch(date) {
 export function epochToDate(epoch) {
     return new Date(epoch * 1000);
 }
+

@@ -57,11 +57,13 @@ const Login = (props) => {
                         />
                     </div>
                 </div>
-                <div className="button">
-                    <Button variant="contained" color="primary" type="submit">
-                        Login
-                    </Button>
-                </div>
+                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}>
+                    <Box>
+                        <Button variant="contained" color="primary" type="submit">
+                            Login
+                        </Button>
+                    </Box>
+                </Box>
             </form>
             <Box>
                 <Typography variant="p" display="inline">Don,t Have An Account? </Typography>

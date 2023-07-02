@@ -27,7 +27,7 @@ const routes = [
             },
             {
                 path: "/admin/products/:id/edit",
-                element: <>products</>
+                element: <EditProducts />
             }
         ]
     }

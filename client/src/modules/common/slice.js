@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { STATE_REDUCER_KEY } from "./constants";
 import { ACTION_TYPES as AUTH_ACTION } from "../auth/actionTypes";
+import { ACTION_TYPES } from "./actionTypes";
 const initialState = {
     navigator: null,
     user: {},
@@ -33,9 +34,12 @@ const slice = createSlice({
             .addCase(AUTH_ACTION.USER_PROFILE_SUCCESS, (state, { payload }) => {
                 state.user = payload.data;
                 if (state.user.isAdmin) {
-                    state.homePath = "/admin";
+                    state.homePath = "/admin/dashboard";
                 }
             }).addCase(AUTH_ACTION.USER_PROFILE_FAILURE, () => {
+            })
+            .addCase(ACTION_TYPES.LOG_OUT, (state) => {
+                state.homePath = "/home";
             });
     }
 });

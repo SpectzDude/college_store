@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Orders from "../../models/Orders.js";
 import Products from "../../models/Products.js";
 import Student from "../../models/Student.js";
+import { dateToEpochApi } from "../../config/utils.js";
 
 export const getProducts = (async (req, res) => {
     try {
@@ -15,12 +16,13 @@ export const getProducts = (async (req, res) => {
 
 
 export const buyNow = (async (req, res) => {
-    const userId = req.userId
+    const userId = mongoose.Types.ObjectId(req.userId);
     const { _id: productId } = req.body;
     try {
         const student = await Student.findOne({ user: userId })
-        const currDate = dateToEpoch(new Date())
-        await Orders.create({ studentId: student._id, productId, date: currDate });
+        const currDate = dateToEpochApi(new Date())
+        const order = await Orders.create({ studentId: student._id, productId, date: currDate });
+        console.log("order", order)
         const product = await Products.findOne({ _id: productId });
         if (!product) {
             return res.status(404).json({ message: "Product not found" })
@@ -38,6 +40,7 @@ export const buyNow = (async (req, res) => {
         }
 
     } catch (error) {
+        console.log("error", error)
         res.status(500).json({ message: "Something went wrong" });
     }
 })

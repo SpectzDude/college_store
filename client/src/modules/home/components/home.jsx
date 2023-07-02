@@ -4,17 +4,25 @@ import React, { useEffect } from "react";
 import Header from "../../../common/components/Header";
 import ItemCard from "../../../common/components/ItemCard";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
-import { connect } from "react-redux";
-import { fetchProductList } from "../actions";
+import { connect, useDispatch } from "react-redux";
+import { buyNow, fetchProductList, preOrder } from "../actions";
 import { getProducts } from "../selectors";
 
 const UserHome = (props) => {
     const { items = [], fetchProductListAsync } = props;
     const theme = useTheme();
+    const dispatch = useDispatch();
     const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
     useEffect(() => {
         fetchProductListAsync();
     }, []);
+    const handleBuyNow = ({ item, buyOption }) => {
+        if (buyOption) {
+            dispatch(buyNow(item));
+        } else {
+            dispatch(preOrder(item));
+        }
+    };
     return <Box>
         <Box m="20px">
             <Box
@@ -65,8 +73,8 @@ const UserHome = (props) => {
                                 }
                             />
                             {item.stock > 0 ?
-                                <Button variant="contained" sx={{ color: "white", bgcolor: "#6262ff" }}> Buy Now </Button> :
-                                <Button variant="contained" sx={{ color: "white", bgcolor: "#4d4d4d" }}> Pre Order </Button>}
+                                <Button variant="contained" sx={{ color: "white", bgcolor: "#6262ff" }} onClick={() => handleBuyNow({ item, buyOption: true })}> Buy Now </Button> :
+                                <Button variant="contained" sx={{ color: "white", bgcolor: "#4d4d4d" }} onClick={() => handleBuyNow({ item, buyOption: false })}> Pre Order </Button>}
 
                         </Box>
                     </Grid>;

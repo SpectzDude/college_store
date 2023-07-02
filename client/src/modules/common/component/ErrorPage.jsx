@@ -40,6 +40,11 @@ const ErrorPage = (props) => {
             </Grid>
             <Grid item xs={12} sx={{ bottom: "10px", position: "absolute" }}>
                 <Grid sx={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                    <Button variant="contained" size="large" onClick={() => navigate("./login")} sx={{ fontWeight: 700 }} >
+                        Login Again
+                    </Button>
+                </Grid>
+                <Grid sx={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                     <Button variant="contained" size="large" onClick={() => navigate(`../${homePath}`)} sx={{ fontWeight: 700 }} >
                         Go to Home
                     </Button>

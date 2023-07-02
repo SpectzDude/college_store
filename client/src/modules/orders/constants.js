@@ -7,38 +7,38 @@ export const TABLE_COLUMN = [
     {
         id: "title",
         header: "Product Name",
-        accessorKey: "title",
+        accessorKey: "productId.title",
         size: 150
     },
     {
         id: "price",
         header: "Price",
-        accessorKey: "price",
+        accessorKey: "productId.price",
         size: 150
     },
     {
         id: "brand",
         header: "Brand",
-        accessorKey: "brand",
+        accessorKey: "productId.brand",
         size: 150
     },
 
     {
         id: "category",
         header: "Product Category",
-        accessorKey: "category",
+        accessorKey: "productId.category",
         size: 150
     },
     {
         id: "status",
         header: "Order Status",
-        accessorKey: "status",
+        accessorFn: (row) => row.status ? "Order Placed" : "Pending",
         size: 150
     },
     {
         id: "deliveredStatus",
         header: "Delivery Status",
-        accessorKey: "deliveredStatus",
+        accessorFn: (row) => row.deliveredStatus ? "Delivered" : "Pending",
         size: 150
     }, {
         id: "message",

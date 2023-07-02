@@ -4,11 +4,21 @@ import { Box, Grid, IconButton } from "@mui/material";
 import { LogoutOutlined } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { logout } from "../actions";
+import { useNavigate } from "react-router-dom";
+import { STORAGE_KEYS } from "../constants";
+import { ACTION_TYPES } from "../../common/actionTypes";
 
 const AppHeader = () => {
     //, "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" }
     // const drawerToggle = useSelector(state => state[STATE_REDUCER_KEY]).drawerToggle;
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        dispatch({ type: ACTION_TYPES.LOG_OUT });
+        localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+        dispatch(logout(true));
+        navigate("/login");
+    };
     return (
         <Grid
             component="header"
@@ -31,7 +41,7 @@ const AppHeader = () => {
                     fontSize: "14px", color: "white", bgcolor: "#ff4747", borderRadius: "5px", "&:hover": {
                         bgcolor: "#ff1414"
                     }
-                }} onClick={() => dispatch(logout())}>
+                }} onClick={handleLogout}>
                     <LogoutOutlined />
                     Logout
                 </IconButton>

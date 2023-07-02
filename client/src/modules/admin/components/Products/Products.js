@@ -57,7 +57,7 @@ const Products = () => {
 
 
     toolBarActions.push({
-        title: "Create", icon: <AddCircleOutline fontSize="large" />, handleClick: () => navigate("../create")
+        title: "Create", icon: <AddCircleOutline fontSize="large" />, handleClick: () => navigate("../products/create")
     });
 
 
