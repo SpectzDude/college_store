@@ -31,3 +31,17 @@ export const loginApi = async (dispatch, data) => {
         // Handle failure
     }
 };
+
+export const getProfile = async (dispatch) => {
+    try {
+        await makeApiCall(
+            dispatch,
+            "/auth/profile",
+            [ACTION_TYPES.USER_PROFILE_REQUEST, ACTION_TYPES.USER_PROFILE_SUCCESS, ACTION_TYPES.USER_PROFILE_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};

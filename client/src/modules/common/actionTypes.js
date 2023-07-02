@@ -1,0 +1,9 @@
+import { STATE_REDUCER_KEY } from "./constants";
+
+export const ACTION_TYPES = {
+    LOG_OUT: `${STATE_REDUCER_KEY}/LOG_OUT`,
+
+    REFRESH: `${STATE_REDUCER_KEY}/REFRESH`,
+
+    NAVIGATE: `${STATE_REDUCER_KEY}/NAVIGATE`
+};

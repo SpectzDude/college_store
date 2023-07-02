@@ -2,10 +2,13 @@
 import React from "react";
 import { Box, Grid, IconButton } from "@mui/material";
 import { LogoutOutlined } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { logout } from "../actions";
 
-const Header = () => {
+const AppHeader = () => {
     //, "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" }
     // const drawerToggle = useSelector(state => state[STATE_REDUCER_KEY]).drawerToggle;
+    const dispatch = useDispatch();
     return (
         <Grid
             component="header"
@@ -24,7 +27,11 @@ const Header = () => {
                 </Box>
             </Box>
             <Box sx={{ position: "relative", left: "-15px" }}>
-                <IconButton>
+                <IconButton sx={{
+                    fontSize: "14px", color: "white", bgcolor: "#ff4747", borderRadius: "5px", "&:hover": {
+                        bgcolor: "#ff1414"
+                    }
+                }} onClick={() => dispatch(logout())}>
                     <LogoutOutlined />
                     Logout
                 </IconButton>
@@ -33,4 +40,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default AppHeader;

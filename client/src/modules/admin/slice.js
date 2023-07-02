@@ -4,7 +4,7 @@ import { STATE_REDUCER_KEY } from "./constants";
 
 const initialState = {
     usersList: [],
-    itemsList: {}
+    productList: {}
 
 };
 

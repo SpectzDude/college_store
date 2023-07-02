@@ -1,15 +1,13 @@
-import UserLogo from "./user.png";
 import React, { useEffect } from "react";
-import { stylesContainer } from "./Register";
+
 import { connect, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
-import { actions as commonSliceActions } from "../../common/slice";
+import { useParams } from "react-router";
 import { Typography, Box, TextField, Button } from "@mui/material";
 import { useFormik } from "formik";
-import { loginAsync } from "../actions";
+import { editProduct, fetchProductById } from "../actions";
 
-const Login = (props) => {
-    const navigate = useNavigate();
+const EditProduct = (props) => {
+    const { id } = useParams();
     const dispatch = useDispatch();
     const { submit } = props;
     const formik = useFormik({
@@ -22,16 +20,11 @@ const Login = (props) => {
         }
     });
     useEffect(() => {
-        dispatch(commonSliceActions.setNavigator(navigate));
+        dispatch(fetchProductById(id));
     }, []);
 
 
-    return <Box style={stylesContainer} >
-        <Box sx={{ position: "absolute" }}>
-            <Box sx={{ position: "relative", top: "-40px", left: "5px" }}>
-                <img src={UserLogo} alt="logo" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
-            </Box>
-        </Box>
+    return <Box sx={{ flexGrow: 2 }} >
         <Box sx={{ display: "flex", borderRadius: "10px", bgcolor: "secondary.main", flexDirection: "column", p: 3, maxHeight: "60vh" }}>
             <Typography variant="h2" py={2}>Login</Typography>
             <form onSubmit={formik.handleSubmit}>
@@ -63,19 +56,15 @@ const Login = (props) => {
                     </Button>
                 </div>
             </form>
-            <Box>
-                <Typography variant="p" display="inline">Don,t Have An Account? </Typography>
-                <Typography onClick={() => navigate("../register")} variant="p" sx={{ color: "blue", cursor: "pointer" }} display="inline">  Register </Typography>
-            </Box>
         </Box>
     </Box >;
 };
 
 
 const mapDispatchToProps = (dispatch) => ({
-    submit: data => dispatch(loginAsync(data))
+    submit: data => dispatch(editProduct(data))
 });
 
-const ConnectedLogin = connect(null, mapDispatchToProps)(Login);
+const EditProductConnected = connect(null, mapDispatchToProps)(EditProduct);
 
-export default ConnectedLogin;
+export default EditProductConnected;

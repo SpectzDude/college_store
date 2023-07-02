@@ -48,3 +48,14 @@ export const register = async (req, res) => {
         res.status(500).json({ errorTitle: ERROR_MSG.SOMETHING_WENT, message: error.message });
     }
 };
+
+export const getProfile = (async (req, res) => {
+    const userId = req.userId;
+    try {
+        const user = await User.findOne({ _id: userId })
+        if (!user) return res.status(404).json({ message: "No user" })
+        res.status(200).json({ data: user })
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});

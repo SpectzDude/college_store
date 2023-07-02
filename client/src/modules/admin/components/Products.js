@@ -2,18 +2,18 @@ import React, { useEffect, useMemo } from "react";
 import { actions as sliceActions } from "../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { fetchOrdersList } from "../actions";
+import { fetchProductList } from "../actions";
 import { Filter1Rounded, ViewInArOutlined } from "@mui/icons-material";
-import { STATE_REDUCER_KEY, TABLE_COLUMN, orderList } from "../constants";
+import { STATE_REDUCER_KEY, TABLE_COLUMN, productColList } from "../constants";
 import CustomListMenu from "../../../common/components/CustomListMenu";
 import { REACT_TABLE_COMMON_OPTIONS } from "../../common/constants";
 import CustomReactTable from "../../../common/components/CustomTable";
 
 
-const OrderList = () => {
+const Products = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { data: orders = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].orders);
+    const { productList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].productList);
 
     // eslint-disable-next-line no-unused-vars
     const columns = useMemo(
@@ -26,6 +26,9 @@ const OrderList = () => {
 
         if (item[1]) {
             customActions.push({ title: "View", icon: <ViewInArOutlined fontSize="small" />, handleClick: () => navigate(`${row._id}/view`) });
+        }
+        if (item[1]) {
+            customActions.push({ title: "Edit", icon: <ViewInArOutlined fontSize="small" />, handleClick: () => navigate(`${row._id}/edit`) });
         }
         return customActions;
     };
@@ -68,7 +71,7 @@ const OrderList = () => {
             // rowSelection: rowSelectionState
         },
         initialState: {
-            columnOrder: orderList
+            columnOrder: productColList
         },
         customPagination: {
             handleChangePage
@@ -79,7 +82,7 @@ const OrderList = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchOrdersList());
+        dispatch(fetchProductList());
         return (() => {
             dispatch(sliceActions.clearAll());
         }
@@ -88,16 +91,16 @@ const OrderList = () => {
     return (
         <>
             <CustomReactTable
-                data={orders}
+                data={productList}
                 columns={columns}
                 options={options}
                 enableRowVirtualization={false}
                 enableCustomTableFilter={true}
-                title={"Orders List"}
+                title={"Product List"}
             />
         </>
 
     );
 };
 
-export default OrderList;
+export default Products;

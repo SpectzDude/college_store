@@ -6,7 +6,8 @@ import { routes as auth } from "../modules/auth/routes";
 import UserHome from "./home/components/home";
 import { PrivateRoute } from "./common/component/ProtectedRoute";
 import OrderList from "./orders/components/OrdersList";
-
+import AdminHome from "./admin/AdminHome";
+import { routes as adminRoutes } from "./admin/routes";
 const routes =
     [
         {
@@ -22,9 +23,9 @@ const routes =
                     path: "admin",
                     element:
                         <PrivateRoute>
-                            {/* <AdminHome /> */}
+                            <AdminHome />
                         </PrivateRoute>,
-                    // children: adminRoutes || [],
+                    children: adminRoutes || [],
                     errorElement: <ErrorCatch />
                 },
                 {

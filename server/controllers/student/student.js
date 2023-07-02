@@ -11,7 +11,7 @@ export const getProducts = (async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
     }
-})
+});
 
 
 export const buyNow = (async (req, res) => {
@@ -59,15 +59,3 @@ export const getOrdersByUserId = (async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 })
-
-export const orderList = [
-    "title",
-    "price",
-    "brand",
-    "category",
-    "status",
-    "deliveredStatus",
-    "activityStatus",
-    "message",
-    "mrt-row-actions"
-];

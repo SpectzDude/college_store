@@ -1,7 +1,7 @@
 import { List, ListItemButton, ListItemText } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { Home, ListAltOutlined } from "@mui/icons-material";
-
+import { Dashboard, Home, ListAltOutlined, People, Person2Outlined, ProductionQuantityLimitsSharp } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 export let active = {
     display: "flex",
     justifyContent: "space-evenly",
@@ -26,13 +26,14 @@ export let inActive = {
 const SideBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { isAdmin } = useSelector(state => state.common.user);
     let dashStyle = { ...inActive };
     let analyticsStyle = { ...inActive };
 
-    if (location.pathname === "/Home") {
+    if (location.pathname === "/home") {
         dashStyle = { ...active };
     }
-    if (location.pathname === "/items") {
+    if (location.pathname === "/orders") {
         analyticsStyle = { ...active };
     }
 
@@ -50,25 +51,50 @@ const SideBar = () => {
 
         <List sx={mainStyle}>
             <List sx={{ px: 1.5, height: "calc(100vh - 240px) !important", overflowX: "hidden", overflowY: "auto" }}>
-                <List sx={{ px: 0.5, py: 0 }}>
-                    <ListItemButton className="button-sidebar" sx={{ ...dashStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../home")}>
-                        <Home className="svg-Icon" />
-                        <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Home"}</ListItemText>
-                    </ListItemButton>
-                </List>
-                <List sx={{ px: 0.5, py: 0 }}>
-                    <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../orders")}>
-                        <ListAltOutlined />
-                        <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Items"}</ListItemText>
-                    </ListItemButton>
-                </List>
+                {isAdmin ?
+                    <>
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton className="button-sidebar" sx={{ ...dashStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/dashboard")}>
+                                <Dashboard className="svg-Icon" />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Dashboard"}</ListItemText>
+                            </ListItemButton>
+                        </List>
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/products")}>
+                                <ProductionQuantityLimitsSharp />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Products"}</ListItemText>
+                            </ListItemButton>
+                        </List>
 
-                <List sx={{ px: 0.5, py: 0 }}>
-                    <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../profile")}>
-                        <ListAltOutlined />
-                        <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"My Proflle"}</ListItemText>
-                    </ListItemButton>
-                </List>
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/users")}>
+                                <People />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Users"}</ListItemText>
+                            </ListItemButton>
+                        </List>
+                    </> :
+
+                    <>
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton className="button-sidebar" sx={{ ...dashStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../home")}>
+                                <Home className="svg-Icon" />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Home"}</ListItemText>
+                            </ListItemButton>
+                        </List>
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../orders")}>
+                                <ListAltOutlined />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Items"}</ListItemText>
+                            </ListItemButton>
+                        </List>
+
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../profile")}>
+                                <Person2Outlined />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"My Proflle"}</ListItemText>
+                            </ListItemButton>
+                        </List>
+                    </>}
             </List>
         </List >
 
