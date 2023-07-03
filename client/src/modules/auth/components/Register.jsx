@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { actions as commonSliceActions } from "../../common/slice";
+import { registrationSchema as validationSchema } from "../validate";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import UserLogo from "./user.png";
 export const stylesContainer = {
@@ -30,15 +31,16 @@ const Register = (props) => {
   const { submit } = props;
   const formik = useFormik({
     initialValues: {
-      fullName: "student",
-      userName: "st1",
-      email: "student@test.com",
-      phoneNumber: "1111",
-      password: "222",
-      confirmPassword: "222",
-      gender: "male",
-      collegeId: "555"
+      fullName: "",
+      userName: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      confirmPassword: "",
+      gender: "",
+      collegeId: ""
     },
+    validationSchema,
     onSubmit: (values) => {
       submit(values);
     }
@@ -54,77 +56,98 @@ const Register = (props) => {
       <form onSubmit={formik.handleSubmit}>
         <div className="details">
           <div className="input-box">
-            <TextField
-              id="fullName"
-              name="fullName"
-              label="Full Name"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.fullName}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="fullName"
+                name="fullName"
+                label="Full Name"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.fullName}
+                error={formik.touched.fullName && formik.errors.fullName ? true : false}
+              />
+            </FormControl>
           </div>
           <div className="input-box">
-            <TextField
-              id="userName"
-              name="userName"
-              label="User Name"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.userName}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="userName"
+                name="userName"
+                label="User Name"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.userName}
+                error={formik.touched.userName && formik.errors.userName ? true : false}
+              />
+            </FormControl>
           </div>
           <div className="input-box">
-            <TextField
-              id="email"
-              name="email"
-              label="Email"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="email"
+                name="email"
+                label="Email"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+                error={formik.touched.email && formik.errors.email ? true : false}
+              />
+            </FormControl>
           </div>
           <div className="input-box">
-            <TextField
-              id="phoneNumber"
-              name="phoneNumber"
-              label="Phone Number"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.phoneNumber}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="phoneNumber"
+                name="phoneNumber"
+                label="Phone Number"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.phoneNumber}
+                error={formik.touched.phoneNumber && formik.errors.phoneNumber ? true : false}
+              />
+            </FormControl>
           </div>
           <div className="input-box">
-            <TextField
-              id="collegeId"
-              name="collegeId"
-              label="College ID"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.collegeId}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="collegeId"
+                name="collegeId"
+                label="College ID"
+                type="text"
+                onChange={formik.handleChange}
+                value={formik.values.collegeId}
+                error={formik.touched.collegeId && formik.errors.collegeId ? true : false}
+              />
+            </FormControl>
           </div>
           <div className="input-box">
-            <TextField
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.password}
+                error={formik.touched.password && formik.errors.password ? true : false}
+              />
+            </FormControl>
           </div>
           <div className="input-box">
-            <TextField
-              id="confirmPassword"
-              name="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.confirmPassword}
-            />
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.confirmPassword}
+                error={formik.touched.confirmPassword && formik.errors.confirmPassword ? true : false}
+              />
+            </FormControl>
           </div>
           <div className="input-box">
-            <FormControl>
+            <FormControl sx={{ width: "100%" }}>
               <InputLabel id="gender-label">Gender</InputLabel>
               <Select
                 id="gender"
@@ -132,6 +155,7 @@ const Register = (props) => {
                 labelId="gender-label"
                 value={formik.values.gender}
                 onChange={formik.handleChange}
+                error={formik.touched.gender && formik.errors.gender ? true : false}
               >
                 <MenuItem value="">Select Gender</MenuItem>
                 <MenuItem value="male">Male</MenuItem>
@@ -141,11 +165,13 @@ const Register = (props) => {
             </FormControl>
           </div>
         </div>
-        <div className="button">
-          <Button variant="contained" color="primary" type="submit">
-            Register
-          </Button>
-        </div>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}>
+          <Box>
+            <Button variant="contained" color="primary" type="submit">
+              Register
+            </Button>
+          </Box>
+        </Box>
       </form>
       <Box>
         <Typography variant="p" display="inline"> Already have an account? </Typography>

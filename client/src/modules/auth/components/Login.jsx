@@ -4,9 +4,10 @@ import { stylesContainer } from "./Register";
 import { connect, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { actions as commonSliceActions } from "../../common/slice";
-import { Typography, Box, TextField, Button } from "@mui/material";
+import { Typography, Box, TextField, Button, FormControl } from "@mui/material";
 import { useFormik } from "formik";
 import { loginAsync } from "../actions";
+import { loginSchema as validationSchema } from "../validate";
 
 const Login = (props) => {
     const navigate = useNavigate();
@@ -14,9 +15,12 @@ const Login = (props) => {
     const { submit } = props;
     const formik = useFormik({
         initialValues: {
-            password: "123",
-            email: "admin@test.com"
+            password: "",
+            email: ""
+            // password: "123",
+            // email: "admin@test.com"
         },
+        validationSchema,
         onSubmit: (values) => {
             submit(values);
         }
@@ -35,26 +39,32 @@ const Login = (props) => {
         <Box sx={{ display: "flex", borderRadius: "10px", bgcolor: "secondary.main", flexDirection: "column", p: 3, maxHeight: "60vh" }}>
             <Typography variant="h2" py={2}>Login</Typography>
             <form onSubmit={formik.handleSubmit}>
-                <div className="details">
+                <div className="">
                     <div className="input-box">
-                        <TextField
-                            id="email"
-                            name="email"
-                            label="Email"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.email}
-                        />
+                        <FormControl sx={{ width: "100%" }}>
+                            <TextField
+                                id="email"
+                                name="email"
+                                label="Email"
+                                type="text"
+                                onChange={formik.handleChange}
+                                value={formik.values.email}
+                                error={formik.touched.email && formik.errors.email ? true : false}
+                            />
+                        </FormControl>
                     </div>
                     <div className="input-box">
-                        <TextField
-                            id="password"
-                            name="password"
-                            label="Password"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.password}
-                        />
+                        <FormControl sx={{ width: "100%" }}>
+                            <TextField
+                                id="password"
+                                name="password"
+                                label="Password"
+                                type="password"
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
+                                error={formik.touched.password && formik.errors.password ? true : false}
+                            />
+                        </FormControl>
                     </div>
                 </div>
                 <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}>

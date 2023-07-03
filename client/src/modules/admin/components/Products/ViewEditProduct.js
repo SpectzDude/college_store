@@ -5,12 +5,12 @@ import { useParams } from "react-router";
 import { Typography, Box, TextField, Button, Grid } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
-import { Field, Form, withFormik } from "formik";
+import { ErrorMessage, Field, Form, withFormik } from "formik";
 import { createProduct, editProduct, fetchProductById } from "../../actions";
 import LoadingCustomOverlay from "../../../../common/components/LoadingOverLay";
 import { getProductDetails } from "../../selectors";
 import { actions } from "../../slice";
-
+import { productDetailsSchema as validationSchema } from "../../validate";
 const TextArea = (p) => <TextField multiline maxRows={4} {...p} />;
 const EditProduct = (props) => {
     const { id } = useParams();
@@ -49,24 +49,31 @@ const EditProduct = (props) => {
                         <Grid container columnSpacing={2} rowSpacing={3}>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
                                 <Field type="text" name="title" label="Product Title" as={TextField} />
+                                <ErrorMessage name="title" component="div" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
                                 <Field type="textarea" name="description" label="Product Description" as={TextArea} />
+                                <ErrorMessage name="description" component="div" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
                                 <Field type="text" name="category" label="Category" as={TextField} />
+                                <ErrorMessage name="category" component="div" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
                                 <Field type="text" name="price" label="Product Selling Price" as={TextField} />
+                                <ErrorMessage name="price" component="div" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
                                 <Field type="text" name="brand" label="Brand" as={TextField} />
+                                <ErrorMessage name="brand" component="div" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
                                 <Field type="text" name="discountPercentage" label="Add Discount %" as={TextField} />
+                                <ErrorMessage name="discountPercentage" component="div" className="error-message" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
                                 <Field type="number" name="stock" label="Stock Count" as={TextField} />
+                                <ErrorMessage name="stock" component="div" className="error-message" />
                             </Grid>
                         </Grid>
                         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}>
@@ -102,6 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const EditProductConnected = withFormik({
     enableReinitialize: true,
+    validationSchema: validationSchema,
     mapPropsToValues: (props) => {
         return props.productDetails.data;
     },
