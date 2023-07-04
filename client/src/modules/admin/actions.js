@@ -1,5 +1,5 @@
 import { errorNotify, successNotify } from "../../utils/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi } from "./api";
 
 
 export const fetchProductList = () => {
@@ -56,3 +56,15 @@ export const deleteProd = (data) => {
         }
     };
 };
+export const createDummy = () => {
+    return async (dispatch) => {
+        try {
+            await createDummyApi(dispatch);
+            dispatch(successNotify({ message: "Dummy Product Created" }));
+            dispatch(fetchProductList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+//createDummy

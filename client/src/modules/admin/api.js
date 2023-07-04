@@ -74,3 +74,18 @@ export const deleteProductByIdApi = async (dispatch, id) => {
         // Handle failure
     }
 };
+
+//createDummyApi
+export const createDummyApi = async (dispatch) => {
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/create-dummy",
+            [ACTION_TYPES.CREATE_DUMMY_PROD_REQUEST, ACTION_TYPES.CREATE_DUMMY_PROD_SUCCESS, ACTION_TYPES.CREATE_DUMMY_PROD_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
