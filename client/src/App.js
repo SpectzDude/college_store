@@ -13,11 +13,5 @@ function App() {
     </Typography>
   );
 }
-function App(){
-useEffect(() => {
-  dispatch(commonSliceActions.setNavigator(navigate));
-}, []);
-const navigate = useNavigate();
-    const dispatch = useDispatch();
-}
+
 export default App;
