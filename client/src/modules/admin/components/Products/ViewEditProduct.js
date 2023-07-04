@@ -33,7 +33,7 @@ const EditProduct = (props) => {
     }, []);
     const handleDummy = () => {
         dispatch(createDummy());
-    }
+    };
     return (
         <LoadingCustomOverlay active={requestInProgress}>
             <Box sx={{ flexGrow: 2, p: 4 }}>
