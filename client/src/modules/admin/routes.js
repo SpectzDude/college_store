@@ -1,8 +1,9 @@
 import Products from "./components/Products/Products";
 import EditProducts from "./components/Products/ViewEditProduct";
-import User from "./components/Products/Users/UsersList";
-import ViewEditUser from "./components/Products/Users/ViewEditUser";
-import PendingOrders from "./components/Products/Orders/PendingOrders";
+import UsersList from "./components/Users/UsersList";
+import ViewEditUser from "./components/Users/ViewEditUser";
+import PendingOrders from "./components/Orders/PendingOrders";
+import DeliveryOrders from "./components/Orders/DeliveryOrders";
 
 const routes = [
     {
@@ -13,15 +14,15 @@ const routes = [
             },
             {
                 path: "/admin/orders",
-                element: <PendingOrders/>
+                element: <PendingOrders />
             },
             {
                 path: "/admin/users",
-                element: <UsersList/>
+                element: <UsersList />
             },
             {
                 path: "/admin/users/:id/edit",
-                element: <EditUser />
+                element: <ViewEditUser />
             },
             {
                 path: "/admin/products",
@@ -38,7 +39,15 @@ const routes = [
             {
                 path: "/admin/products/:id/edit",
                 element: <EditProducts />
-            }
+            },
+            {
+                path: "/admin/orders",
+                element: <PendingOrders />
+            },
+            {
+                path: "/admin/orders/delivery",
+                element: <DeliveryOrders />
+            },
         ]
     }
 ];

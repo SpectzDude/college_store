@@ -7,7 +7,7 @@ router.post('/add-product', addProducts);
 router.get('/create-dummy', addDummyProducts);
 router.get('/products', getProducts);
 router.get('/products/:id', getProductById);
-router.patch('/products', updateProductById);
+router.patch('/products/:id', updateProductById);
 router.delete('/products/:id', deleteProductById);
 
 export default router;

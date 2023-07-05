@@ -10,7 +10,6 @@ import { createProduct, editProduct, fetchProductById, createDummy } from "../..
 import LoadingCustomOverlay from "../../../../common/components/LoadingOverLay";
 import { getProductDetails } from "../../selectors";
 import { actions } from "../../slice";
-import { productDetailsSchema as validationSchema } from "../../validate";
 const TextArea = (p) => <TextField multiline maxRows={4} {...p} />;
 const EditUser = (props) => {
     const { id } = useParams();
@@ -18,10 +17,11 @@ const EditUser = (props) => {
     const [create, setCreate] = useState(false);
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-    const { productDetails: { requestInProgress } = {}, handleSubmit } = props;
+    const { productDetails: { requestInProgress } = {}, handleSubmit, setFieldValue } = props;
     useEffect(() => {
         if (id) {
             dispatch(fetchProductById(id));
+            setFieldValue("_id", id);
         }
         if (pathname.includes("view")) {
             setView(true);
@@ -103,9 +103,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     submit: (values) => {
-
         if (values._id) {
-            dispatch(editUser(values));
+            dispatch(editProduct(values));
         } else {
             dispatch(createProduct(values));
         }
@@ -114,7 +113,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const EditUserConnected = withFormik({
     enableReinitialize: true,
-    validationSchema: validationSchema,
     mapPropsToValues: (props) => {
         return props.productDetails.data;
     },

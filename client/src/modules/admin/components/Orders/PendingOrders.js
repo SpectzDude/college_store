@@ -1,19 +1,19 @@
 import React, { useEffect, useMemo } from "react";
-import { actions as sliceActions } from "../../../slice";
+import { actions as sliceActions } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteProd, fetchProductList } from "../../../actions";
+import { deleteProd, fetchProductList } from "../../actions";
 import { AddCircleOutline, Delete, Edit, ViewCarousel } from "@mui/icons-material";
-import { STATE_REDUCER_KEY, ORDERS_TABLE_COLUMN, pendingOrderColList } from "../../../constants";
-import CustomListMenu from "../../../../../common/components/CustomListMenu";
-import { REACT_TABLE_COMMON_OPTIONS } from "../../../../common/constants";
-import CustomReactTable from "../../../../../common/components/CustomTable";
+import { STATE_REDUCER_KEY, ORDERS_TABLE_COLUMN, pendingOrderColList } from "../../constants";
+import CustomListMenu from "../../../../common/components/CustomListMenu";
+import { REACT_TABLE_COMMON_OPTIONS } from "../../../common/constants";
+import CustomReactTable from "../../../../common/components/CustomTable";
 
 
 const PendingOrders = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { data: PendingStatusList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].pendingOrdersList);
+    const { data: orders = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].pendingOrdersList);
 
     // eslint-disable-next-line no-unused-vars
     const columns = useMemo(
@@ -97,7 +97,7 @@ const PendingOrders = () => {
     return (
         <>
             <CustomReactTable
-                data={PendingStatusList}
+                data={orders}
                 columns={columns}
                 options={options}
                 enableRowVirtualization={false}

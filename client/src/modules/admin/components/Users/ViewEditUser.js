@@ -6,11 +6,11 @@ import { Typography, Box, TextField, Button, Grid } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 import { ErrorMessage, Field, Form, withFormik } from "formik";
-import { createProduct, editProduct, fetchProductById, createDummy } from "../../../actions";
-import LoadingCustomOverlay from "../../../../../common/components/LoadingOverLay";
-import { getProductDetails } from "../../../selectors";
-import { actions } from "../../../slice";
-import { productDetailsSchema as validationSchema } from "../../../validate";
+import { createProduct, editUser } from "../../actions";
+import LoadingCustomOverlay from "../../../../common/components/LoadingOverLay";
+import { getProductDetails } from "../../selectors";
+import { actions } from "../../slice";
+import { productDetailsSchema as validationSchema } from "../../validate";
 const TextArea = (p) => <TextField multiline maxRows={4} {...p} />;
 const EditUser = (props) => {
     const { id } = useParams();
@@ -20,9 +20,9 @@ const EditUser = (props) => {
     const { pathname } = useLocation();
     const { productDetails: { requestInProgress } = {}, handleSubmit } = props;
     useEffect(() => {
-        if (id) {
-            dispatch(fetchProductById(id));
-        }
+        // if (id) {
+        //     dispatch(fetchProductById(id));
+        // }
         if (pathname.includes("view")) {
             setView(true);
         }
@@ -31,9 +31,6 @@ const EditUser = (props) => {
         }
         return () => dispatch(actions.clearAll());
     }, []);
-    const handleDummy = () => {
-        dispatch(createDummy());
-    };
     return (
         <LoadingCustomOverlay active={requestInProgress}>
             <Box sx={{ flexGrow: 2, p: 4 }}>
@@ -47,9 +44,7 @@ const EditUser = (props) => {
                             {view ? "View" : "Edit"} Product
                         </Typography>
                     )}
-                    {create && process.env === "development" && <Button
-                        sx={{ px: 2 }} variant="contained" color="secondary" onClick={handleDummy}>
-                        Create Dummy Product</Button>}
+
                     <Form onSubmit={handleSubmit}>
                         <Grid container columnSpacing={2} rowSpacing={3}>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>

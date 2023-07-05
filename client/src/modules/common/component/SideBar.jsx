@@ -1,6 +1,6 @@
 import { List, ListItemButton, ListItemText } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { Dashboard, Home, ListAltOutlined, People, Person2Outlined, ProductionQuantityLimitsSharp } from "@mui/icons-material";
+import { CheckBoxOutlineBlankSharp, Dashboard, Home, ListAltOutlined, People, Person2Outlined, ProductionQuantityLimitsSharp } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 export let active = {
     display: "flex",
@@ -67,6 +67,12 @@ const SideBar = () => {
                             <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/products")}>
                                 <ProductionQuantityLimitsSharp />
                                 <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Products"}</ListItemText>
+                            </ListItemButton>
+                        </List>
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/orders")}>
+                                <CheckBoxOutlineBlankSharp />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Orders"}</ListItemText>
                             </ListItemButton>
                         </List>
 

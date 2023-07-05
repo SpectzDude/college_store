@@ -31,10 +31,11 @@ export const createProductApi = async (dispatch, data) => {
 };
 
 export const editProducts = async (dispatch, data = {}) => {
+    const { _id = "" } = data;
     try {
         await makeApiCall(
             dispatch,
-            "/admin/products/",
+            `/admin/products/${_id}`,
             [ACTION_TYPES.EDIT_PRODUCT_REQUEST, ACTION_TYPES.EDIT_PRODUCT_SUCCESS, ACTION_TYPES.EDIT_PRODUCT_FAILURE],
             "PATCH",
             data
@@ -77,6 +78,20 @@ export const deleteProductByIdApi = async (dispatch, id) => {
 
 //createDummyApi
 export const createDummyApi = async (dispatch) => {
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/create-dummy",
+            [ACTION_TYPES.CREATE_DUMMY_PROD_REQUEST, ACTION_TYPES.CREATE_DUMMY_PROD_SUCCESS, ACTION_TYPES.CREATE_DUMMY_PROD_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+//editUserApi
+export const editUserApi = async (dispatch) => {
     try {
         await makeApiCall(
             dispatch,

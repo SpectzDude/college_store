@@ -58,10 +58,12 @@ export const getProductById = async (req, res) => {
 
 export const updateProductById = async (req, res) => {
     const { _id, ...updatedData } = req.body;
+    const { id } = req.params;
+    const prodID = _id || id;
 
     try {
         const updatedProduct = await Products.findOneAndUpdate(
-            { _id },
+            { _id: prodID },
             updatedData,
             { new: true })
         res.status(201).json({ data: updatedProduct });

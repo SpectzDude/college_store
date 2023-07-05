@@ -15,6 +15,7 @@ const initialState = {
     productDetails: {
         requestInProgress: false,
         data: {
+            _id: "",
             brand: "",
             description: "",
             discountPercentage: "",

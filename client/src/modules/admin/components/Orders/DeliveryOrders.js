@@ -1,23 +1,23 @@
 import React, { useEffect, useMemo } from "react";
-import { actions as sliceActions } from "../../../slice";
+import { actions as sliceActions } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteProd, fetchProductList } from "../../../actions";
+import { deleteProd, fetchProductList } from "../../actions";
 import { AddCircleOutline, Delete, Edit, ViewCarousel } from "@mui/icons-material";
-import { STATE_REDUCER_KEY, TABLE_COLUMN, productColList } from "../../../constants";
-import CustomListMenu from "../../../../../common/components/CustomListMenu";
-import { REACT_TABLE_COMMON_OPTIONS } from "../../../../common/constants";
-import CustomReactTable from "../../../../../common/components/CustomTable";
+import { STATE_REDUCER_KEY, ORDERS_TABLE_COLUMN, pendingOrderColList } from "../../constants";
+import CustomListMenu from "../../../../common/components/CustomListMenu";
+import { REACT_TABLE_COMMON_OPTIONS } from "../../../common/constants";
+import CustomReactTable from "../../../../common/components/CustomTable";
 
 
-const Users = () => {
+const DeliveryOrders = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { data: productList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].productList);
+    const { data: PendingStatusList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].pendingOrdersList);
 
     // eslint-disable-next-line no-unused-vars
     const columns = useMemo(
-        () => TABLE_COLUMN,
+        () => ORDERS_TABLE_COLUMN,
         []
     );
     const actions = (row) => {
@@ -25,10 +25,10 @@ const Users = () => {
         let customActions = [];
 
         if (item[1]) {
-            customActions.push({ title: "View", icon: <ViewCarousel fontSize="small" />, handleClick: () => navigate(`${row.original._id}/view`) });
+            customActions.push({ title: "Approve", icon: <ViewCarousel fontSize="small" />, handleClick: () => navigate(`${row.original._id}/view`) });
         }
         if (item[1]) {
-            customActions.push({ title: "Edit", icon: <Edit fontSize="small" />, handleClick: () => navigate(`${row.original._id}/edit`) });
+            customActions.push({ title: "Decline", icon: <Edit fontSize="small" />, handleClick: () => navigate(`${row.original._id}/edit`) });
         }
         if (item[1]) {
             customActions.push({
@@ -77,7 +77,7 @@ const Users = () => {
             // rowSelection: rowSelectionState
         },
         initialState: {
-            columnOrder: productColList
+            columnOrder: pendingOrderColList
         },
         customPagination: {
             handleChangePage
@@ -97,16 +97,16 @@ const Users = () => {
     return (
         <>
             <CustomReactTable
-                data={productList}
+                data={PendingStatusList}
                 columns={columns}
                 options={options}
                 enableRowVirtualization={false}
                 enableCustomTableFilter={true}
-                title={"Product List"}
+                title={"Delivery Orders Status"}
             />
         </>
 
     );
 };
 
-export default Users;
+export default DeliveryOrders;
