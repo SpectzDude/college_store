@@ -1,6 +1,8 @@
 import Products from "./components/Products/Products";
 import EditProducts from "./components/Products/ViewEditProduct";
-
+import User from "./components/Products/Users/UsersList";
+import ViewEditUser from "./components/Products/Users/ViewEditUser";
+import PendingOrders from "./components/Products/Orders/PendingOrders";
 
 const routes = [
     {
@@ -10,8 +12,16 @@ const routes = [
                 element: <>dashboard</>
             },
             {
+                path: "/admin/orders",
+                element: <PendingOrders/>
+            },
+            {
                 path: "/admin/users",
-                element: <>Users list</>
+                element: <UsersList/>
+            },
+            {
+                path: "/admin/users/:id/edit",
+                element: <EditUser />
             },
             {
                 path: "/admin/products",

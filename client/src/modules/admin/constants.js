@@ -1,3 +1,5 @@
+import { size } from "lodash";
+
 export const STATE_REDUCER_KEY = "admin";
 
 
@@ -64,3 +66,50 @@ export const productColList = [
 ];
 
 
+export const ORDERS_TABLE_COLUMN = [
+    {
+        id: "id"
+    },
+    {
+        id: "title",
+        header: "Product Name",
+        accessorKey: "title",
+        size: 150
+    },
+    {
+        id: "studentName",
+        header: "Product studentName",
+        accessorKey: "user.fullName",
+        size: 150
+    },
+    {
+        id: "price",
+        header: "Price",
+        accessorKey: "price",
+        size: 150
+    },
+    {
+        id: "date",
+        header: "Date",
+        accessorKey: "date",
+        size: 150
+    },
+
+    {
+        id: "thumbnail",
+        header: "Product Image",
+        accessorKey: "thumbnail",
+        size: 150
+    }
+];
+
+export const ORDERS_STATUS = ["PENDING","ORDER_PLACED","ON_TRANSIT","OUT_FOR_DELIVERY","DELIVERED"]
+
+export const pendingOrderColList = [
+    "title",
+    "studentName",
+    "price",
+    "date",
+    "thumbnail",
+    "mrt-row-actions"
+];

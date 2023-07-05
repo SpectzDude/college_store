@@ -6,11 +6,11 @@ import { Typography, Box, TextField, Button, Grid } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 import { ErrorMessage, Field, Form, withFormik } from "formik";
-import { createProduct, editProduct, fetchProductById, createDummy } from "../../actions";
-import LoadingCustomOverlay from "../../../../common/components/LoadingOverLay";
-import { getProductDetails } from "../../selectors";
-import { actions } from "../../slice";
-import { productDetailsSchema as validationSchema } from "../../validate";
+import { createProduct, editProduct, fetchProductById, createDummy } from "../../../actions";
+import LoadingCustomOverlay from "../../../../../common/components/LoadingOverLay";
+import { getProductDetails } from "../../../selectors";
+import { actions } from "../../../slice";
+import { productDetailsSchema as validationSchema } from "../../../validate";
 const TextArea = (p) => <TextField multiline maxRows={4} {...p} />;
 const EditUser = (props) => {
     const { id } = useParams();

@@ -26,6 +26,15 @@ const initialState = {
             title: "",
             category: ""
         }
+    },
+    pendingOrdersList: {
+        requestInProgress: false,
+        data: []
+
+    },
+    deliveryList: {
+        requestInProgress: false,
+        data: []
     }
 
 };

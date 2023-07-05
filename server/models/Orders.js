@@ -11,9 +11,10 @@ const orderSChema = mongoose.Schema({
     },
     date: Date,
     status: {
-        type: Boolean,
+        type: String,
         required: true,
-        default: false,
+        default: "PENDING",
+        enums: ["PENDING","ORDER_PLACED","ON_TRANSIT","OUT_FOR_DELIVERY","DELIVERED"]
     },
     deliveredStatus: {
         type: Boolean,
