@@ -7,7 +7,7 @@ import { logout } from "../actions";
 import { useNavigate } from "react-router-dom";
 import { STORAGE_KEYS } from "../constants";
 import { ACTION_TYPES } from "../../common/actionTypes";
-
+import LOGO from "../../../assets/csLogo.png";
 const AppHeader = () => {
     //, "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" }
     // const drawerToggle = useSelector(state => state[STATE_REDUCER_KEY]).drawerToggle;
@@ -31,8 +31,7 @@ const AppHeader = () => {
             >
                 <Box sx={{ minWidth: "140px" }}>
                     <Box sx={{ m: 1, mr: 1, p: 2 }}>
-                        Logo here
-                        {/* <img width={58} height={55} src={companyLogo} alt="logo" /> */}
+                        <img width={58} height={55} src={LOGO} alt="logo" />
                     </Box>
                 </Box>
             </Box>

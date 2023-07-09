@@ -5,12 +5,9 @@ import { getNavigator } from "../common/selectors";
 
 
 export const fetchOrdersList = () => {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         try {
             await ordersListApi(dispatch);
-            const state = getState(); // Get the current state
-            const navigator = getNavigator(state);
-            navigator("/home");
         } catch (error) {
             // Handle failure
         }
