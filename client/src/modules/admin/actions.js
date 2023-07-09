@@ -1,6 +1,6 @@
 import { dismissNotification } from "reapop";
 import { errorNotify, loaderNotify, successNotify } from "../../utils/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi } from "./api";
 import { getNavigator } from "../common/selectors";
 
 
@@ -105,6 +105,18 @@ export const uploadNewProductImage = (data) => {
             await uploadNewProductImageApi(dispatch, data);
             dispatch(dismissNotification("product-image-upload-1"));
             dispatch(successNotify({ message: "Image uploaded successfully" }));
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+//fetchPendingOrdersList
+
+export const fetchPendingOrdersList = (data) => {
+    return async (dispatch) => {
+        try {
+            await fetchPendingOrdersListApi(dispatch, data);
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }

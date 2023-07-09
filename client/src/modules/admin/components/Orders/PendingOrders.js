@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { actions as sliceActions } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteProd, fetchProductList } from "../../actions";
+import { fetchPendingOrdersList } from "../../actions";
 import { AddCircleOutline, Delete, Edit, ViewCarousel } from "@mui/icons-material";
 import { STATE_REDUCER_KEY, ORDERS_TABLE_COLUMN, pendingOrderColList } from "../../constants";
 import CustomListMenu from "../../../../common/components/CustomListMenu";
@@ -32,8 +32,7 @@ const PendingOrders = () => {
         }
         if (item[1]) {
             customActions.push({
-                title: "Delete", icon: <Delete fontSize="small" />,
-                handleClick: () => dispatch(deleteProd(row.original._id))
+                title: "Delete", icon: <Delete fontSize="small" />
             });
         }
         return customActions;
@@ -88,7 +87,7 @@ const PendingOrders = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchProductList());
+        dispatch(fetchPendingOrdersList({ key: "PENDING" }));
         return (() => {
             dispatch(sliceActions.clearAll());
         }
@@ -102,7 +101,7 @@ const PendingOrders = () => {
                 options={options}
                 enableRowVirtualization={false}
                 enableCustomTableFilter={true}
-                title={"Pending Status"}
+                title={"Pending Order Status"}
             />
         </>
 

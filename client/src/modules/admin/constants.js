@@ -1,3 +1,4 @@
+import moment from "moment";
 import { Avatar } from "@mui/material";
 
 export const STATE_REDUCER_KEY = "admin";
@@ -65,6 +66,11 @@ export const productColList = [
     "mrt-row-actions"
 ];
 
+function formatDate(dateString) {
+    const date = moment.utc(dateString).format("YYYY-MM-DD");
+    return date;
+}
+
 
 export const ORDERS_TABLE_COLUMN = [
     {
@@ -77,12 +83,6 @@ export const ORDERS_TABLE_COLUMN = [
         size: 150
     },
     {
-        id: "studentName",
-        header: "Student Name",
-        accessorKey: "user.fullName",
-        size: 150
-    },
-    {
         id: "price",
         header: "Price",
         accessorKey: "price",
@@ -91,14 +91,19 @@ export const ORDERS_TABLE_COLUMN = [
     {
         id: "date",
         header: "Date",
-        accessorKey: "date",
+        accessorFn: (raw) => formatDate(raw.date),
         size: 150
     },
-
+    {
+        id: "status",
+        header: "Order Status",
+        accessorKey: "status",
+        size: 150
+    },
     {
         id: "thumbnail",
         header: "Product Image",
-        accessorKey: "thumbnail",
+        accessorFn: (raw) => <Avatar alt={raw.description} src={raw.thumbnail || ""} variant="square" />,
         size: 150
     }
 ];
@@ -107,10 +112,10 @@ export const ORDERS_STATUS = ["PENDING", "ORDER_PLACED", "ON_TRANSIT", "OUT_FOR_
 
 export const pendingOrderColList = [
     "title",
-    "studentName",
     "price",
     "date",
     "thumbnail",
+    "status",
     "mrt-row-actions"
 ];
 

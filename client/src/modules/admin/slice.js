@@ -96,9 +96,13 @@ const slice = createSlice({
                 state.openUploaderModalNewProd = false;
                 state.cropDataNewProd = null;
                 state.productDetails.data.thumbnail = payload.data;
+            })
+            .addCase(ACTION_TYPES.FETCH_ORDERS_SUCCESS, (state, { payload }) => {
+                state.pendingOrdersList.requestInProgress = false;
+                state.pendingOrdersList.data = payload.data;
             });
     }
 
-}); //PRODUCT_IMAGE_UPLOAD_REQUEST
+}); //FETCH_ORDERS_SUCCESS
 
 export const { actions, reducer } = slice;

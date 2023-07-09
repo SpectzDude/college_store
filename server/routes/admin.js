@@ -1,5 +1,5 @@
 import express from 'express';
-import { addDummyProducts, addProducts, getProductById, updateProductById, deleteProductById } from '../controllers/admin/admin.js';
+import { addDummyProducts, addProducts, getProductById, updateProductById, deleteProductById, getPendingOrders } from '../controllers/admin/admin.js';
 import { getProducts } from '../controllers/student/student.js';
 import imageROuter from "./image.js"
 import multer from 'multer';
@@ -14,7 +14,7 @@ router.get('/products', getProducts);
 router.get('/products/:id', getProductById);
 router.put('/products/:id', updateProductById);
 router.delete('/products/:id', deleteProductById);
-
+router.get("/orders/:key", getPendingOrders);
 router.use("/image", imageROuter);
 
 export default router;

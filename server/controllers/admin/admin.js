@@ -5,6 +5,8 @@ import path from "path";
 import casual from 'casual';
 import cloudinary from "../../config/imageUpload.js";
 import { verifyFile } from "../../config/utils.js";
+import Orders from "../../models/Orders.js";
+import Student from "../../models/Student.js";
 
 function generateRandomProduct() {
     const product = {
@@ -84,6 +86,44 @@ export const deleteProductById = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 };
+
+
+export const getPendingOrders = async (req, res) => {
+    const { key = "PENDING" } = req.params;
+    try {
+        const orders = await Orders.find({ status: key })
+            .populate({
+                path: 'productId',
+                select: 'title price thumbnail',
+            })
+            .select('date status');
+
+        if (orders.length === 0) {
+            return res.status(404).json({ message: "No orders found" });
+        }
+
+        const formattedOrders = (
+            orders.map((order) => {
+                const { productId, date, status, studentId } = order;
+                const { title, price, thumbnail } = productId;
+                return {
+                    studentId,
+                    title,
+                    price,
+                    date,
+                    status,
+                    thumbnail,
+                };
+            })
+        );
+
+        res.status(200).json({ data: formattedOrders });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
+
+
 
 
 

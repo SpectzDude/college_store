@@ -141,3 +141,18 @@ export const uploadNewProductImageApi = async (dispatch, data) => {
         // Handle failure
     }
 };
+
+export const fetchPendingOrdersListApi = async (dispatch, data) => {
+    const { key = "PENDING" } = data;
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/orders/" + key,
+            [ACTION_TYPES.FETCH_ORDERS_REQUEST, ACTION_TYPES.FETCH_ORDERS_SUCCESS, ACTION_TYPES.FETCH_ORDERS_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
