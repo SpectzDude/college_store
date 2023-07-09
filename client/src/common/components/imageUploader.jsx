@@ -73,7 +73,6 @@ export default function ImageUploaderPopUp({ title = "Title", id = 0, action, op
         }
     };
     const handleSubmit = () => {
-
         dispatch(action({ id: id, image: img }));
         setImage({ imgSrc: null, imgSrcExt: null });
     };
@@ -148,7 +147,7 @@ export default function ImageUploaderPopUp({ title = "Title", id = 0, action, op
                     </DialogContent>
                     <DialogActions sx={{ display: "flex", justifyContent: "center", backgroundColor: "white.main" }}>
                         <IconButton sx={iconWrapper} onClick={handleClose}>
-                            <Typography variant="p" sx={{ fontSize: "14px", textAlign: "center", color: "white.main" }}>{"cancel"}
+                            <Typography variant="p" sx={{ fontSize: "14px", textAlign: "center", color: "white.main" }}>{"Close"}
                             </Typography><Close sx={{ color: "white.main", fontSize: "17px" }} /></IconButton>
                         {cropData && <IconButton sx={iconWrapper} variant="contained" onClick={handleSubmit}>
                             <CloudUpload sx={{ color: "white.main", fontSize: "17px" }} />

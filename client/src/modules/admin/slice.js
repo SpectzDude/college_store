@@ -83,7 +83,10 @@ const slice = createSlice({
                 state.openUploaderModal = false;
                 state.productDetails.data = payload.data;
             })
-            ;
+            .addCase(ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_SUCCESS, (state, { payload }) => {
+                state.openUploaderModal = false;
+                state.productDetails.data.thumbnail = payload.data;
+            });
     }
 
 }); //PRODUCT_IMAGE_UPLOAD_REQUEST

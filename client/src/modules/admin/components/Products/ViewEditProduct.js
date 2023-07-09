@@ -6,7 +6,7 @@ import { Typography, Box, TextField, Button, Grid } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 import { ErrorMessage, Field, Form, withFormik } from "formik";
-import { createProduct, editProduct, fetchProductById, createDummy, uploadProductImage } from "../../actions";
+import { createProduct, editProduct, fetchProductById, createDummy, uploadProductImage, uploadNewProductImage } from "../../actions";
 import LoadingCustomOverlay from "../../../../common/components/LoadingOverLay";
 import { getProductDetails } from "../../selectors";
 import { actions } from "../../slice";
@@ -89,7 +89,7 @@ const EditUser = (props) => {
                                 <ErrorMessage name="stock" component="div" className="error-message" />
                             </Grid>
                         </Grid>
-                        <Grid sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 4, mb: 2 }}>
+                        {values.thumbnail && <Grid sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 4, mb: 2 }}>
                             <Box sx={{
                                 width: "500px", maxHeight: "450px", borderRadius: "10px", "&:hover": {
                                     backgroundColor: "#0000",
@@ -104,11 +104,15 @@ const EditUser = (props) => {
                                     loading="lazy"
                                 />
                             </Box>
-                        </Grid>
-                        <Box sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", py: 2 }}>
-                            <Box>
-                                <Button variant="contained" color="primary" onClick={handleImage}> {values.thumbnail ? "Change Image" : "Upload Product Image"} </Button>
-                            </Box>
+                        </Grid>}
+                        <Box sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", my: 3 }}>
+                            {create ? <Button
+                                sx={{ px: 2 }} variant="contained" color="secondary" onClick={handleImage}>
+                                Upload Product Image</Button> :
+                                <Box>
+                                    <Button variant="contained" color="primary" onClick={handleImage}> {values.thumbnail ? "Change Image" : "Upload Product Image"} </Button>
+                                </Box>
+                            }
                             <Box>
                                 <Button sx={{ px: 2 }} variant="contained" color="secondary" type="submit">
                                     {id ? "Update" : "Create"}
@@ -119,10 +123,24 @@ const EditUser = (props) => {
                     </Form>
                 </Box>
                 <ImageUploaderPopUp
-                    id={values._id}
+                    id={values._id || 0}
+                    status={create ? "NEW" : "EDIT"}
                     name={values.title}
                     description="Product Image"
                     action={uploadProductImage}
+                    title={"Product Image"}
+                    popupName={"Click Here to upload image"}
+                    open={openUploaderModal}
+                    setOpen={actions.setOpenUploader}
+                    cropData={cropData}
+                    setCropData={actions.setCropData}
+                />
+                {/* Upload new image in create */}
+                <ImageUploaderPopUp
+                    status={create ? "NEW" : "EDIT"}
+                    name={"new"}
+                    description="New Product Image"
+                    action={uploadNewProductImage}
                     title={"Product Image"}
                     popupName={"Click Here to upload image"}
                     open={openUploaderModal}

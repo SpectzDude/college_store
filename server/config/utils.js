@@ -1,4 +1,5 @@
-import { fileTypeFromBuffer, fileTypeFromFile } from 'file-type';
+import { fileTypeFromBuffer } from 'file-type';
+import crypto from "crypto";
 
 export function dateToEpochApi(date) {
     return Math.floor(date.getTime() / 1000);
@@ -31,3 +32,12 @@ export const verifyFile = async (fileBuffer) => {
     return { status: true, message: "" };
 };
 
+
+export const generateUniqueID = () => {
+    const timestamp = Date.now().toString();
+    const randomString = Math.random().toString(36).substring(2);
+    const data = timestamp + randomString;
+    const hash = crypto.createHash('sha256').update(data).digest('hex');
+
+    return hash;
+};
