@@ -52,8 +52,8 @@ const slice = createSlice({
         setCropData: (state, { payload }) => {
             state.cropData = payload;
         },
-        setOpenUploader: (state) => {
-            state.openUploaderModal = true;
+        setOpenUploader: (state, { payload }) => {
+            state.openUploaderModal = payload;
         }
     },
     extraReducers: (builder) => {
@@ -78,9 +78,14 @@ const slice = createSlice({
             })
             .addCase(ACTION_TYPES.FETCH_PRODUCT_LIST_FAILURE, (state) => {
                 state.productList.requestInProgress = false;
-            });
+            })
+            .addCase(ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_SUCCESS, (state, { payload }) => {
+                state.openUploaderModal = false;
+                state.productDetails.data = payload.data;
+            })
+            ;
     }
 
-}); //FETCH_PRODUCT_LIST_REQUEST
+}); //PRODUCT_IMAGE_UPLOAD_REQUEST
 
 export const { actions, reducer } = slice;

@@ -1,7 +1,7 @@
 import { notify } from "reapop";
 
 const NOTIFICATION_PROPS = {
-    title: "S",
+    title: "",
     message: "",
     dismissible: false,
     position: "top-right",

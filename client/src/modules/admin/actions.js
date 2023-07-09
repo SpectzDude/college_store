@@ -1,5 +1,6 @@
-import { errorNotify, successNotify } from "../../utils/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi } from "./api";
+import { dismissNotification } from "reapop";
+import { errorNotify, loaderNotify, successNotify } from "../../utils/repopUtils";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi } from "./api";
 
 
 export const fetchProductList = () => {
@@ -80,14 +81,26 @@ export const editUser = () => {
     };
 };
 
-
-//uploadProductImage
 export const uploadProductImage = (data) => {
     return async (dispatch) => {
         try {
+            dispatch(loaderNotify({ id: "product-image-upload", title: "Uploading...", message: "Changing Product Image " }));
             await uploadProductImageApi(dispatch, data);
+            dispatch(dismissNotification("product-image-upload"));
             dispatch(successNotify({ message: "Image uploaded successfully" }));
-            dispatch(fetchProductList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+export const uploadNewProductImage = (data) => {
+    return async (dispatch) => {
+        try {
+            dispatch(loaderNotify({ id: "product-image-upload-1", title: "Uploading..." }));
+            await uploadNewProductImageApi(dispatch, data);
+            dispatch(dismissNotification("product-image-upload-1"));
+            dispatch(successNotify({ message: "Image uploaded successfully" }));
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }

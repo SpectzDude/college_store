@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import Products from "../../models/Products.js";
-import { Readable } from 'stream';
-
+import fs from 'fs-extra';
+import path from "path";
 import casual from 'casual';
 import cloudinary from "../../config/imageUpload.js";
+import { verifyFile } from "../../config/utils.js";
 
 function generateRandomProduct() {
     const product = {
@@ -90,38 +91,48 @@ export const updateProductImageById = async (req, res) => {
     const file = req.body; // Access the binary file data from the request body
     const { id } = req.params;
     const prodID = id;
-    console.log("file", file);
 
     try {
-        const uploadStream = cloudinary.uploader.upload_stream(
-            { folder: 'collegeStoreImages' },
-            async (error, result) => {
-                if (error) {
-                    console.log('error', error.message);
-                    res.status(500).json({ message: error.message });
-                } else {
-                    const updatedProduct = await Products.findOneAndUpdate(
-                        { _id: prodID },
-                        {
-                            $set: {
-                                thumbnail: result.secure_url,
-                                'images.0': result.secure_url,
-                            },
-                        },
-                        { new: true }
-                    );
-                    res.status(201).json({ data: updatedProduct });
-                }
-            }
+        if (!file || !file.buffer) {
+            throw new Error("Invalid file data");
+        }
+        // validation
+        // const { status, message = "" } = verifyFile(file);
+        // if (!status) throw new Error(message);
+
+        // Determine the base directory path
+        const baseDir = process.cwd(); // Get the current working directory
+
+        // Create the temp directory if it doesn't exist
+        const tempDir = path.resolve(baseDir, 'temp');
+        await fs.ensureDir(tempDir);
+
+        // Save the file locally
+        const localPath = path.resolve(tempDir, `${prodID}.jpg`);
+        await fs.writeFile(localPath, Buffer.from(file.buffer));
+
+        // Upload the file to Cloudinary
+        const uploadResult = await cloudinary.uploader.upload(localPath, { folder: 'collegeStoreImages' });
+
+        // Delete the local file
+        await fs.unlink(localPath);
+
+        const updatedProduct = await Products.findOneAndUpdate(
+            { _id: prodID },
+            {
+                $set: {
+                    thumbnail: uploadResult.secure_url,
+                    'images.0': uploadResult.secure_url,
+                },
+            },
+            { new: true }
         );
-
-        const readableStream = new Readable();
-        readableStream.push(file);
-        readableStream.push(null);
-
-        readableStream.pipe(uploadStream);
+        res.status(201).json({ data: updatedProduct });
     } catch (error) {
         console.log('error', error.message);
-        res.status(500).json({ message: 'Something went wrong' });
+        res.status(500).json({ message: error.message || 'Something went wrong' });
     }
 };
+
+
+

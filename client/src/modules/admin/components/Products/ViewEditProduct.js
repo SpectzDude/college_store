@@ -40,7 +40,7 @@ const EditUser = (props) => {
         dispatch(createDummy());
     };
     const handleImage = () => {
-        dispatch(actions.setOpenUploader());
+        dispatch(actions.setOpenUploader(true));
     };
     return (
         <LoadingCustomOverlay active={requestInProgress}>

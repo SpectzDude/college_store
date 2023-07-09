@@ -107,14 +107,32 @@ export const editUserApi = async (dispatch) => {
 
 //uploadProductImageApi
 export const uploadProductImageApi = async (dispatch, data) => {
-    const { id, image } = data;
+    const { id, image = {} } = data;
     try {
         await makeApiCall(
             dispatch,
             `/admin/product-image/${id}`,
             [ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_REQUEST, ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_SUCCESS, ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_FAILURE],
             "POST",
-            image
+            image.file,
+            "FILE"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const uploadNewProductImageApi = async (dispatch, data) => {
+    const { image = {} } = data;
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/product-image/new",
+            [ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_REQUEST, ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_SUCCESS, ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_FAILURE],
+            "POST",
+            image.file,
+            "FILE"
         );
         // Handle success
     } catch (error) {

@@ -35,6 +35,8 @@ const slice = createSlice({
                 state.user = payload.data;
                 if (state.user.isAdmin) {
                     state.homePath = "/admin/dashboard";
+                } else {
+                    state.homePath = "/home";
                 }
             }).addCase(AUTH_ACTION.USER_PROFILE_FAILURE, () => {
             })

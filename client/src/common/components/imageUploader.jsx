@@ -1,27 +1,21 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import {
-    extractImageFileExtensionFromBase64
-} from "./CropHelper";
+import { AddAPhoto, Close, CloudUpload, Crop, Image } from "@mui/icons-material";
+import { Box, Grid, Input, InputLabel, Typography, DialogActions, DialogContent, Divider, DialogTitle, IconButton } from "@mui/material";
+
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
 import { grey, red } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
-import _ from "lodash";
-import { Components, Icons } from "../../../common/components";
-import { Box } from "@mui/material";
 
-export default function ImageUploaderPopUp({ title = "Title", id, name = "Name", description = "Sample", popupName = "Upload", action, open, setOpen, cropData, setCropData }) {
+
+export default function ImageUploaderPopUp({ title = "Title", id = 0, action, open, setOpen, cropData, setCropData }) {
     const dispatch = useDispatch();
-    const { Grid, Input, InputLabel, Typography, DialogActions, DialogContent, Divider, DialogTitle, IconButton } = Components;
-    const { AddAPhoto, Close, CloudUpload, Crop, Image } = Icons;
     const [img, setImage] = useState({ imgSrc: null, imgSrcExt: null });
     const [error, setError] = useState(null);
     const [cropper, setCropper] = useState();
     const [showCropper, setShowCropper] = useState(false);
-    const [imageMeta, setImageMeta] = useState();
     const imageMaxSize = 10000000; // bytes
     const acceptedFileTypesArray = ["image/x-png", "image/png", "image/jpg", "image/jpeg"];
     let uploadEvent = false;
@@ -51,26 +45,14 @@ export default function ImageUploaderPopUp({ title = "Title", id, name = "Name",
     };
     const getCropData = () => {
         if (typeof cropper !== "undefined") {
-            setCropData(cropper.getCroppedCanvas().toDataURL());
+            dispatch(setCropData(cropper.getCroppedCanvas().toDataURL()));
         }
     };
-    const formatImageData = (obj) => {
-        let imageObj = {};
-        _.set(imageObj, "contentType", _.get(obj, "type"));
-        _.set(imageObj, "fileSizeKb", _.get(obj, "size"));
-        _.set(imageObj, "resourceName", `${name}`);
-        _.set(imageObj, "fileExtn", obj.type.split("/")[1]);
-        _.set(imageObj, "resourceDescription", `${name} ${description}`);
-        return imageObj;
-    };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
     const handleClose = () => {
+        dispatch(setOpen(false));
         setCropData(null);
         setImage({ imgSrc: null, imgSrcExt: null });
-        setOpen(false);
         setError(null);
     };
 
@@ -81,29 +63,18 @@ export default function ImageUploaderPopUp({ title = "Title", id, name = "Name",
             uploadEvent = true;
             const isVerified = verifyFile(files);
             if (isVerified) {
-                // imageBase64Data
                 const currentFile = files[0];
-                const myFileItemReader = new FileReader();
-                myFileItemReader.addEventListener("load", () => {
-                    const myResult = myFileItemReader.result;
-                    setShowCropper(true);
-                    setImageMeta(formatImageData(files[0]));
-                    setImage({
-                        imgSrc: myResult,
-                        imgSrcExt: extractImageFileExtensionFromBase64(myResult)
-                    });
-                }, false);
-
-                myFileItemReader.readAsDataURL(currentFile);
-
+                setShowCropper(true);
+                setImage({
+                    file: currentFile,
+                    imgSrc: URL.createObjectURL(currentFile)
+                });
             }
         }
     };
     const handleSubmit = () => {
-        const regex = /data:.*base64,/;
-        let base64EncodedData = cropData.replace(regex, "");
-        let multimediaList = [{ ...imageMeta, base64EncodedData }];
-        dispatch(action({ userId: id, multimediaList }));
+
+        dispatch(action({ id: id, image: img }));
         setImage({ imgSrc: null, imgSrcExt: null });
     };
     const customUploadStyle = {
@@ -126,13 +97,6 @@ export default function ImageUploaderPopUp({ title = "Title", id, name = "Name",
 
     return (
         <Grid>
-            <Button onClick={handleClickOpen} sx={{
-                backgroundColor: "primary.100", "&:hover": {
-                    backgroundColor: "primary.200"
-                }
-            }}>
-                <CloudUpload /> &nbsp; <Typography variant="p" sx={{ fontSize: 10 }}>{popupName}</Typography>
-            </Button>
             <Dialog maxWidth={"200px"} open={open} onClose={handleClose} sx={{ display: "flex", justifyContent: "center" }}>
                 <Box sx={{ backgroundColor: "primary.light" }}>
                     <DialogTitle sx={{ color: "white.main", fontWeight: 700 }}>{title}</DialogTitle>

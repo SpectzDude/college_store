@@ -47,7 +47,7 @@ const routes = [
             {
                 path: "/admin/orders/delivery",
                 element: <DeliveryOrders />
-            },
+            }
         ]
     }
 ];
