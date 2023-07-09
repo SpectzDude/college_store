@@ -114,7 +114,11 @@ const Register = (props) => {
                 name="collegeId"
                 label="College ID"
                 type="text"
-                onChange={formik.handleChange}
+                onChange={(event) =>{
+                  const uppercaseValue = event.target.value.toUpperCase();
+                  formik.handleChange(event);
+                  formik.setFieldValue("collegeId", uppercaseValue);
+                }}
                 value={formik.values.collegeId}
                 error={formik.touched.collegeId && formik.errors.collegeId ? true : false}
               />

@@ -2,8 +2,8 @@ import { Box, Tooltip, Typography } from "@mui/material";
 import Discount from "./Discount";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const ItemCard = ({ title = "", brand = "", subtitle = "", stock = 0, discountPercentage, icon, imageUrl = "", description = "", price = "" }) => {
-
+const ItemCard = ({ title = "", brand = "", subtitle = "", stock = 0, discountPercentage, icon, imageUrl = "", description = "", price = "",}) => {
+ const formattedPrice = price.toLocaleString("en-IN", { style: "currency", currency: "INR" });
 
   return (
     <Box width="100%" m="0 30px" p="12px 12px">
@@ -33,7 +33,7 @@ const ItemCard = ({ title = "", brand = "", subtitle = "", stock = 0, discountPe
             fontWeight="bold"
             sx={{ color: "red" }}
           >
-            {`$ ${price}`}
+            {`${formattedPrice}`}
           </Typography>
           <Box sx={{ display: "flex", width: "120px", height: "10px" }}>
             {stock ? <Typography sx={{ color: "green" }}> Available </Typography> : <Typography sx={{ color: "gray" }}> Out of stock </Typography>}</Box>
