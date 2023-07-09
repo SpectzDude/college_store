@@ -1,0 +1,14 @@
+{
+    "name": "college_store",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "start": "npm run start-client && npm run start-server",
+        "client": "cd client && npm start",
+        "server": "cd server && npm start",
+        "clean-all": "rmdir /s /q node_modules && clean-client && clean server && npm cache clean --force",
+        "clean-client": "cd client && npm run clean",
+        "clean-server": "cd server && npm run clean"
+    }
+}

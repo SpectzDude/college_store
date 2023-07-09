@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "npm i && nodemon index.js",
-    "clean": "rmdir /s /q node_modules && npm cache clean --force"
+    "clean": "rmdir /s /q node_modules &&  npm cache clean --force"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

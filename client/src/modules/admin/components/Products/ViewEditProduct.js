@@ -40,8 +40,8 @@ const EditUser = (props) => {
         dispatch(createDummy());
     };
     const handleImage = () => {
-
-    }
+        dispatch(actions.setOpenUploader());
+    };
     return (
         <LoadingCustomOverlay active={requestInProgress}>
             <Box sx={{ flexGrow: 2, p: 4 }}>
