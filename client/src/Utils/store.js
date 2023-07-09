@@ -7,6 +7,7 @@ import storage from "reduxjs-toolkit-persist/lib/storage";
 import autoMergeLevel1 from "reduxjs-toolkit-persist/lib/stateReconciler/autoMergeLevel1";
 import thunk from "redux-thunk";
 import rootReducer from "./rootReducer";
+import { STATE_REDUCER_KEY } from "../modules/common";
 const middleWares = [];
 
 // eslint-disable-next-line no-undef
@@ -18,7 +19,7 @@ const persistConfig = {
     key: "root",
     storage: storage,
     stateReconciler: autoMergeLevel1,
-    whitelist: ["common"]
+    whitelist: [STATE_REDUCER_KEY]
 };
 
 const reducers = combineReducers({

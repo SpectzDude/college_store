@@ -13,7 +13,6 @@ import { actions } from "../../slice";
 import ImageUploaderPopUp from "../../../../common/components/imageUploader";
 import { STATE_REDUCER_KEY } from "../../constants";
 
-
 const TextArea = (p) => <TextField multiline maxRows={4} {...p} />;
 const EditUser = (props) => {
     const { id } = useParams();
@@ -22,7 +21,8 @@ const EditUser = (props) => {
     const dispatch = useDispatch();
     const { pathname } = useLocation();
     const { productDetails: { requestInProgress } = {}, handleSubmit, setFieldValue, values = {} } = props;
-    const { cropData, openUploaderModal = false } = useSelector(state => state[STATE_REDUCER_KEY])
+
+    const { cropData, openUploaderModal = false, openUploaderModalNewProd = false, cropDataNewProd = null } = useSelector(state => state[STATE_REDUCER_KEY])
     useEffect(() => {
         if (id) {
             dispatch(fetchProductById(id));
@@ -40,7 +40,12 @@ const EditUser = (props) => {
         dispatch(createDummy());
     };
     const handleImage = () => {
-        dispatch(actions.setOpenUploader(true));
+        if (create) {
+            dispatch(actions.setOpenUploaderNew(true));
+        } else {
+            dispatch(actions.setOpenUploader(true));
+        }
+
     };
     return (
         <LoadingCustomOverlay active={requestInProgress}>
@@ -73,7 +78,7 @@ const EditUser = (props) => {
                                 <ErrorMessage name="category" component="div" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
-                                <Field type="text" name="price" label="Product Selling Price" as={TextField} />
+                                <Field type="text" name="price" label="Price (Selling Price)" as={TextField} />
                                 <ErrorMessage name="price" component="div" />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
@@ -106,13 +111,9 @@ const EditUser = (props) => {
                             </Box>
                         </Grid>}
                         <Box sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", my: 3 }}>
-                            {create ? <Button
-                                sx={{ px: 2 }} variant="contained" color="secondary" onClick={handleImage}>
-                                Upload Product Image</Button> :
-                                <Box>
-                                    <Button variant="contained" color="primary" onClick={handleImage}> {values.thumbnail ? "Change Image" : "Upload Product Image"} </Button>
-                                </Box>
-                            }
+                            <Box>
+                                <Button variant="contained" color="primary" onClick={handleImage}> {values.thumbnail ? "Change Image" : "Upload Product Image"} </Button>
+                            </Box>
                             <Box>
                                 <Button sx={{ px: 2 }} variant="contained" color="secondary" type="submit">
                                     {id ? "Update" : "Create"}
@@ -136,18 +137,18 @@ const EditUser = (props) => {
                     setCropData={actions.setCropData}
                 />
                 {/* Upload new image in create */}
-                <ImageUploaderPopUp
-                    status={create ? "NEW" : "EDIT"}
+                {create && <ImageUploaderPopUp
+                    id={values._id || 0}
                     name={"new"}
                     description="New Product Image"
                     action={uploadNewProductImage}
                     title={"Product Image"}
                     popupName={"Click Here to upload image"}
-                    open={openUploaderModal}
-                    setOpen={actions.setOpenUploader}
-                    cropData={cropData}
-                    setCropData={actions.setCropData}
-                />
+                    open={openUploaderModalNewProd}
+                    setOpen={actions.setOpenUploaderNew}
+                    cropData={cropDataNewProd}
+                    setCropData={actions.setCropDataNew}
+                />}
             </Box>
         </LoadingCustomOverlay>
     );

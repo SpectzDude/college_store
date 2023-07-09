@@ -2,6 +2,7 @@ import { List, ListItemButton, ListItemText } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 import { CheckBoxOutlineBlankSharp, Dashboard, Home, ListAltOutlined, People, Person2Outlined, ProductionQuantityLimitsSharp } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import { STATE_REDUCER_KEY } from "../constants";
 export let active = {
     display: "flex",
     justifyContent: "space-evenly",
@@ -26,7 +27,7 @@ export let inActive = {
 const SideBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { isAdmin } = useSelector(state => state.common.user);
+    const { isAdmin } = useSelector(state => state[STATE_REDUCER_KEY].user);
     let dashStyle = { ...inActive };
     let analyticsStyle = { ...inActive };
     let profileStyle = { ...inActive };

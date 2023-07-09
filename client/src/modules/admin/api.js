@@ -16,13 +16,15 @@ export const fetchAllProducts = async (dispatch) => {
 };
 
 export const createProductApi = async (dispatch, data) => {
+    // eslint-disable-next-line no-unused-vars
+    const { _id, ...newProd } = data;
     try {
         await makeApiCall(
             dispatch,
             "/admin/add-product",
             [ACTION_TYPES.CREATE_PRODUCT, ACTION_TYPES.CREATE_PRODUCT_SUCCESS, ACTION_TYPES.CREATE_PRODUCT_FAILURE],
             "POST",
-            data
+            newProd
         );
         // Handle success
     } catch (error) {
@@ -31,14 +33,14 @@ export const createProductApi = async (dispatch, data) => {
 };
 
 export const editProducts = async (dispatch, data = {}) => {
-    const { _id = "" } = data;
+    const { _id = "", ...rest } = data;
     try {
         await makeApiCall(
             dispatch,
             `/admin/products/${_id}`,
             [ACTION_TYPES.EDIT_PRODUCT_REQUEST, ACTION_TYPES.EDIT_PRODUCT_SUCCESS, ACTION_TYPES.EDIT_PRODUCT_FAILURE],
-            "PATCH",
-            data
+            "PUT",
+            rest
         );
         // Handle success
     } catch (error) {
@@ -111,7 +113,7 @@ export const uploadProductImageApi = async (dispatch, data) => {
     try {
         await makeApiCall(
             dispatch,
-            `/admin/product-image/${id}`,
+            `/admin/image/product-image/${id}`,
             [ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_REQUEST, ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_SUCCESS, ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_FAILURE],
             "POST",
             image.file,
@@ -128,7 +130,7 @@ export const uploadNewProductImageApi = async (dispatch, data) => {
     try {
         await makeApiCall(
             dispatch,
-            "/admin/product-image/new",
+            "/admin/image/product-image/new",
             [ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_REQUEST, ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_SUCCESS, ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_FAILURE],
             "POST",
             image.file,

@@ -40,7 +40,7 @@ export const loginAsync = (data) => {
                 const path = getHomePath(state);
                 navigator(`${path}`);
                 window.location.reload();
-            }, 3000);
+            }, 2300);
         } catch (error) {
             // Handle failure
         }

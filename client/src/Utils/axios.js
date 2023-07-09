@@ -11,7 +11,7 @@ export const API = axios.create({ baseURL: "http://localhost:4000" });
 
 export const makeApiCall = (dispatch, endpoint, actionTypes = ["REQUEST", "SUCCESS", "FAILURE"], method = "POST", data, type = "") => {
     let authHeaders = {};
-    let additionalHeaders = {}
+    let additionalHeaders = {};
     const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
     if (token) {
         authHeaders = { Authorization: `Bearer ${token}` };

@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import { AddAPhoto, Close, CloudUpload, Crop, Image } from "@mui/icons-material";
 import { Box, Grid, Input, InputLabel, Typography, DialogActions, DialogContent, Divider, DialogTitle, IconButton } from "@mui/material";
-
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
 import { grey, red } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
-
+import _ from "lodash";
 
 export default function ImageUploaderPopUp({ title = "Title", id = 0, action, open, setOpen, cropData, setCropData }) {
     const dispatch = useDispatch();
     const [img, setImage] = useState({ imgSrc: null, imgSrcExt: null });
     const [error, setError] = useState(null);
-    const [cropper, setCropper] = useState();
+    const [cropper, setCropper] = useState(false);
     const [showCropper, setShowCropper] = useState(false);
+
     const imageMaxSize = 10000000; // bytes
     const acceptedFileTypesArray = ["image/x-png", "image/png", "image/jpg", "image/jpeg"];
     let uploadEvent = false;
@@ -33,9 +33,10 @@ export default function ImageUploaderPopUp({ title = "Title", id = 0, action, op
             }
             if (!acceptedFileTypesArray.includes(currentFileType)) {
                 setShowCropper(false);
-                let errorString = <>  <p>File Not Allowed. Accepted formats</p> <ul>
-                    <li>   {acceptedFileTypesArray.join(", ")}</li>
-                </ul>
+                let errorString = <>
+                    <p>File Not Allowed. Accepted formats</p> <ul>
+                        <li>   {acceptedFileTypesArray.join(", ")}</li>
+                    </ul>
                 </>;
                 setError(errorString);
                 return false;
@@ -59,7 +60,9 @@ export default function ImageUploaderPopUp({ title = "Title", id = 0, action, op
     const handleImage = (e) => {
         setError("");
         let files = e.target.files;
+
         if (files && files.length > 0) {
+
             uploadEvent = true;
             const isVerified = verifyFile(files);
             if (isVerified) {
@@ -73,6 +76,7 @@ export default function ImageUploaderPopUp({ title = "Title", id = 0, action, op
         }
     };
     const handleSubmit = () => {
+
         dispatch(action({ id: id, image: img }));
         setImage({ imgSrc: null, imgSrcExt: null });
     };
@@ -131,7 +135,7 @@ export default function ImageUploaderPopUp({ title = "Title", id = 0, action, op
                         <Grid sx={{ display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", py: 1 }} >
                             <Grid>
                                 <InputLabel htmlFor="file-upload" sx={customUploadStyle}>
-                                    <AddAPhoto /> <Typography sx={{ display: "inline", pb: 0.8 }}>Add Photo</Typography>
+                                    <AddAPhoto /> <Typography sx={{ display: "inline", pb: 0.8 }}>Add</Typography>
                                 </InputLabel>
                                 <Input
                                     id="file-upload"

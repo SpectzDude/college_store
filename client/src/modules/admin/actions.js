@@ -1,6 +1,7 @@
 import { dismissNotification } from "reapop";
 import { errorNotify, loaderNotify, successNotify } from "../../utils/repopUtils";
 import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi } from "./api";
+import { getNavigator } from "../common/selectors";
 
 
 export const fetchProductList = () => {
@@ -14,10 +15,13 @@ export const fetchProductList = () => {
 };
 
 export const createProduct = (data) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         try {
             await createProductApi(dispatch, data);
             dispatch(successNotify({ message: "Product Successfully Created" }));
+            const state = getState();
+            const navigator = getNavigator(state);
+            navigator("./admin/products");
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }
@@ -84,7 +88,7 @@ export const editUser = () => {
 export const uploadProductImage = (data) => {
     return async (dispatch) => {
         try {
-            dispatch(loaderNotify({ id: "product-image-upload", title: "Uploading...", message: "Changing Product Image " }));
+            dispatch(loaderNotify({ id: "product-image-upload", title: "Uploading...", message: "Changing Product Image Data" }));
             await uploadProductImageApi(dispatch, data);
             dispatch(dismissNotification("product-image-upload"));
             dispatch(successNotify({ message: "Image uploaded successfully" }));
@@ -97,7 +101,7 @@ export const uploadProductImage = (data) => {
 export const uploadNewProductImage = (data) => {
     return async (dispatch) => {
         try {
-            dispatch(loaderNotify({ id: "product-image-upload-1", title: "Uploading..." }));
+            dispatch(loaderNotify({ id: "product-image-upload-1", title: "Uploading...", message: "New Image Data" }));
             await uploadNewProductImageApi(dispatch, data);
             dispatch(dismissNotification("product-image-upload-1"));
             dispatch(successNotify({ message: "Image uploaded successfully" }));

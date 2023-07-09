@@ -1,11 +1,12 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { STATE_REDUCER_KEY } from "../constants";
 
 const ErrorPage = (props) => {
     const navigate = useNavigate();
 
-    const homePath = useSelector(state => state.common.homePath);
+    const homePath = useSelector(state => state[STATE_REDUCER_KEY].homePath);
     let { error: { status, message, statusText } = {}, title = "" } = props;
     return (
         <Grid sx={{ display: "flex", minHeight: "600px", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>

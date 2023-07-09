@@ -18,11 +18,11 @@ const initialState = {
             _id: "",
             brand: "",
             description: "",
-            discountPercentage: "",
+            discountPercentage: 0,
             images: [""],
-            preBookedCount: "",
+            preBookedCount: 0,
             price: "",
-            stock: "",
+            stock: 0,
             thumbnail: "",
             title: "",
             category: ""
@@ -39,7 +39,10 @@ const initialState = {
     },
     cropData: null,
     openUploaderModal: false,
-    productImageFile: null
+    productImageFile: null,
+
+    cropDataNewProd: null,
+    openUploaderModalNewProd: false
 
 };
 
@@ -52,8 +55,14 @@ const slice = createSlice({
         setCropData: (state, { payload }) => {
             state.cropData = payload;
         },
+        setCropDataNew: (state, { payload }) => {
+            state.cropDataNewProd = payload;
+        },
         setOpenUploader: (state, { payload }) => {
             state.openUploaderModal = payload;
+        },
+        setOpenUploaderNew: (state, { payload }) => {
+            state.openUploaderModalNewProd = payload;
         }
     },
     extraReducers: (builder) => {
@@ -84,7 +93,8 @@ const slice = createSlice({
                 state.productDetails.data = payload.data;
             })
             .addCase(ACTION_TYPES.NEW_PRODUCT_IMAGE_UPLOAD_SUCCESS, (state, { payload }) => {
-                state.openUploaderModal = false;
+                state.openUploaderModalNewProd = false;
+                state.cropDataNewProd = null;
                 state.productDetails.data.thumbnail = payload.data;
             });
     }
