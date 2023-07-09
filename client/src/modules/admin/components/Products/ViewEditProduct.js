@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Typography, Box, TextField, Button, Grid } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 import { ErrorMessage, Field, Form, withFormik } from "formik";
-import { createProduct, editProduct, fetchProductById, createDummy } from "../../actions";
+import { createProduct, editProduct, fetchProductById, createDummy, uploadProductImage } from "../../actions";
 import LoadingCustomOverlay from "../../../../common/components/LoadingOverLay";
 import { getProductDetails } from "../../selectors";
 import { actions } from "../../slice";
+import ImageUploaderPopUp from "../../../../common/components/imageUploader";
+import { STATE_REDUCER_KEY } from "../../constants";
+
+
 const TextArea = (p) => <TextField multiline maxRows={4} {...p} />;
 const EditUser = (props) => {
     const { id } = useParams();
@@ -17,7 +21,8 @@ const EditUser = (props) => {
     const [create, setCreate] = useState(false);
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-    const { productDetails: { requestInProgress } = {}, handleSubmit, setFieldValue } = props;
+    const { productDetails: { requestInProgress } = {}, handleSubmit, setFieldValue, values = {} } = props;
+    const { cropData, openUploaderModal = false } = useSelector(state => state[STATE_REDUCER_KEY])
     useEffect(() => {
         if (id) {
             dispatch(fetchProductById(id));
@@ -34,6 +39,9 @@ const EditUser = (props) => {
     const handleDummy = () => {
         dispatch(createDummy());
     };
+    const handleImage = () => {
+
+    }
     return (
         <LoadingCustomOverlay active={requestInProgress}>
             <Box sx={{ flexGrow: 2, p: 4 }}>
@@ -81,15 +89,47 @@ const EditUser = (props) => {
                                 <ErrorMessage name="stock" component="div" className="error-message" />
                             </Grid>
                         </Grid>
-                        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}>
+                        <Grid sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 4, mb: 2 }}>
+                            <Box sx={{
+                                width: "500px", maxHeight: "450px", borderRadius: "10px", "&:hover": {
+                                    backgroundColor: "#0000",
+                                    cursor: "pointer",
+                                    content: "'Upload Image Text'"
+                                }
+                            }}>
+                                <img
+                                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                                    src={values.thumbnail}
+                                    alt={values.description}
+                                    loading="lazy"
+                                />
+                            </Box>
+                        </Grid>
+                        <Box sx={{ display: "flex", justifyContent: "space-evenly", alignItems: "center", py: 2 }}>
+                            <Box>
+                                <Button variant="contained" color="primary" onClick={handleImage}> {values.thumbnail ? "Change Image" : "Upload Product Image"} </Button>
+                            </Box>
                             <Box>
                                 <Button sx={{ px: 2 }} variant="contained" color="secondary" type="submit">
                                     {id ? "Update" : "Create"}
                                 </Button>
                             </Box>
+
                         </Box>
                     </Form>
                 </Box>
+                <ImageUploaderPopUp
+                    id={values._id}
+                    name={values.title}
+                    description="Product Image"
+                    action={uploadProductImage}
+                    title={"Product Image"}
+                    popupName={"Click Here to upload image"}
+                    open={openUploaderModal}
+                    setOpen={actions.setOpenUploader}
+                    cropData={cropData}
+                    setCropData={actions.setCropData}
+                />
             </Box>
         </LoadingCustomOverlay>
     );

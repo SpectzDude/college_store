@@ -104,3 +104,20 @@ export const editUserApi = async (dispatch) => {
         // Handle failure
     }
 };
+
+//uploadProductImageApi
+export const uploadProductImageApi = async (dispatch, data) => {
+    const { id, image } = data;
+    try {
+        await makeApiCall(
+            dispatch,
+            `/admin/product-image/${id}`,
+            [ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_REQUEST, ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_SUCCESS, ACTION_TYPES.PRODUCT_IMAGE_UPLOAD_FAILURE],
+            "POST",
+            image
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};

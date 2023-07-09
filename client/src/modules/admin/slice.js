@@ -36,7 +36,10 @@ const initialState = {
     deliveryList: {
         requestInProgress: false,
         data: []
-    }
+    },
+    cropData: null,
+    openUploaderModal: false,
+    productImageFile: null
 
 };
 
@@ -45,7 +48,13 @@ const slice = createSlice({
     initialState,
     name: STATE_REDUCER_KEY,
     reducers: {
-        clearAll: () => initialState
+        clearAll: () => initialState,
+        setCropData: (state, { payload }) => {
+            state.cropData = payload;
+        },
+        setOpenUploader: (state) => {
+            state.openUploaderModal = true;
+        }
     },
     extraReducers: (builder) => {
         builder

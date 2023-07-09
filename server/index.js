@@ -10,7 +10,7 @@ import studentRouter from './routes/studentRouter.js';
 import mongoose from "mongoose"
 import dotenv from "dotenv";
 import { verifyToken } from './middlewares/index.js';
-
+import bodyParser from 'body-parser';
 dotenv.config()
 const app = express();
 const CONNECTION_URL = process.env.MONGODB_CONNECTION || "mongodb://localhost:27017/college_store";
@@ -20,6 +20,8 @@ const port = 4000;
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
+app.use(bodyParser.raw({ type: 'application/octet-stream', limit: '10mb' }));
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
@@ -50,7 +52,7 @@ mongoose
   .then(() => {
     // Check if the database already exists
     const db = mongoose.connection.db;
-    db.listCollections({ name: 'college_store' }).toArray((err, collections) => {
+    db.listCollections({ name: 'orders' }).toArray((err, collections) => {
       if (err) {
         console.log('Error checking database existence:', err);
         return;
@@ -59,16 +61,6 @@ mongoose
       if (collections.length > 0) {
         console.log('DB Connected');
         app.listen(port, () => console.log("Server running on port " + port));
-      } else {
-        // Create the new database
-        db.createCollection('college_store', (err, result) => {
-          if (err) {
-            console.log('Error creating database:', err);
-            return;
-          }
-          console.log('New database created');
-          app.listen(port, () => console.log("Server running on port " + port));
-        });
       }
     });
   })

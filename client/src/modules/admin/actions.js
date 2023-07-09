@@ -1,5 +1,5 @@
 import { errorNotify, successNotify } from "../../utils/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi } from "./api";
 
 
 export const fetchProductList = () => {
@@ -73,6 +73,20 @@ export const editUser = () => {
         try {
             await editUserApi(dispatch);
             dispatch(successNotify({ message: "Dummy Product Created" }));
+            dispatch(fetchProductList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+
+//uploadProductImage
+export const uploadProductImage = (data) => {
+    return async (dispatch) => {
+        try {
+            await uploadProductImageApi(dispatch, data);
+            dispatch(successNotify({ message: "Image uploaded successfully" }));
             dispatch(fetchProductList());
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));

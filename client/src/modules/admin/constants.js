@@ -1,3 +1,5 @@
+import { Avatar } from "@mui/material";
+
 export const STATE_REDUCER_KEY = "admin";
 
 
@@ -45,7 +47,7 @@ export const TABLE_COLUMN = [
     {
         id: "thumbnail",
         header: "Product Image",
-        accessorKey: "thumbnail",
+        accessorFn: (raw) => <Avatar alt={raw.description} src={raw.thumbnail || ""} variant="square" />,
         size: 150
     }
 ];

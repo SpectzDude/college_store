@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import Products from "../../models/Products.js";
+import { Readable } from 'stream';
 
 import casual from 'casual';
+import cloudinary from "../../config/imageUpload.js";
 
 function generateRandomProduct() {
     const product = {
@@ -82,3 +84,44 @@ export const deleteProductById = async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 }
+
+
+export const updateProductImageById = async (req, res) => {
+    const file = req.body; // Access the binary file data from the request body
+    const { id } = req.params;
+    const prodID = id;
+    console.log("file", file);
+
+    try {
+        const uploadStream = cloudinary.uploader.upload_stream(
+            { folder: 'collegeStoreImages' },
+            async (error, result) => {
+                if (error) {
+                    console.log('error', error.message);
+                    res.status(500).json({ message: error.message });
+                } else {
+                    const updatedProduct = await Products.findOneAndUpdate(
+                        { _id: prodID },
+                        {
+                            $set: {
+                                thumbnail: result.secure_url,
+                                'images.0': result.secure_url,
+                            },
+                        },
+                        { new: true }
+                    );
+                    res.status(201).json({ data: updatedProduct });
+                }
+            }
+        );
+
+        const readableStream = new Readable();
+        readableStream.push(file);
+        readableStream.push(null);
+
+        readableStream.pipe(uploadStream);
+    } catch (error) {
+        console.log('error', error.message);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
