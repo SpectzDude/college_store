@@ -7,7 +7,7 @@ import "cropperjs/dist/cropper.css";
 
 import { grey, red } from "@mui/material/colors";
 import { useDispatch } from "react-redux";
-import _ from "lodash";
+
 
 export default function ImageUploaderPopUp({ title = "Title", id = 0, action, open, setOpen, cropData, setCropData }) {
     const dispatch = useDispatch();

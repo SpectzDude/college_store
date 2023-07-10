@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { STATE_REDUCER_KEY } from "./constants";
 import { ACTION_TYPES as AUTH_ACTION } from "../auth/actionTypes";
 import { ACTION_TYPES } from "./actionTypes";
+import moment from "moment";
+
 const initialState = {
+    sessionLoggedIn: moment(),
     navigator: null,
     user: {},
     homePath: "/home"
@@ -32,6 +35,7 @@ const slice = createSlice({
 
             })
             .addCase(AUTH_ACTION.USER_PROFILE_SUCCESS, (state, { payload }) => {
+                state.sessionLoggedIn = moment();
                 state.user = payload.data;
                 if (state.user.isAdmin) {
                     state.homePath = "/admin/dashboard";
