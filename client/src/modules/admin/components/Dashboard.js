@@ -25,7 +25,7 @@ const Dashboard = () => {
             m="10px 0"
             py={2}
         >
-            <Grid container columnSpacing={4} rowSpacing={6}>
+            <Grid container columnSpacing={1} rowSpacing={10}>
                 <Grid item sm={6} md={4} lg={3}>
                     <Box sx={{
                         borderRadius: "20px", width: "250px", height: "120px",
