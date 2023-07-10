@@ -42,7 +42,18 @@ const initialState = {
     productImageFile: null,
 
     cropDataNewProd: null,
-    openUploaderModalNewProd: false
+    openUploaderModalNewProd: false,
+    dashboard: {
+        userCount: 14,
+        studentCount: 12,
+        productCount: 22,
+        pendingOrder: 22,
+        orderInTransit: 11,
+        deliveryPending: 12,
+        delivered: 11,
+        approvalPending: 12
+
+    }
 
 };
 

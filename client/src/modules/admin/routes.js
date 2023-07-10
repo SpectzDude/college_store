@@ -4,13 +4,14 @@ import UsersList from "./components/Users/UsersList";
 import ViewEditUser from "./components/Users/ViewEditUser";
 import PendingOrders from "./components/Orders/PendingOrders";
 import DeliveryOrders from "./components/Orders/DeliveryOrders";
+import Dashboard from "./components/Dashboard";
 
 const routes = [
     {
         children: [
             {
                 path: "/admin/dashboard",
-                element: <>dashboard</>
+                element: <Dashboard />
             },
             {
                 path: "/admin/orders",

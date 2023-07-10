@@ -122,3 +122,13 @@ export const fetchPendingOrdersList = (data) => {
         }
     };
 };
+
+export const dashboardStats = () => {
+    return async (dispatch) => {
+        try {
+            // await fetchPendingOrdersListApi(dispatch, data);
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
