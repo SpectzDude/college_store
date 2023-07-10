@@ -22,7 +22,7 @@ const EditUser = (props) => {
     const { pathname } = useLocation();
     const { productDetails: { requestInProgress } = {}, handleSubmit, setFieldValue, values = {} } = props;
 
-    const { cropData, openUploaderModal = false, openUploaderModalNewProd = false, cropDataNewProd = null } = useSelector(state => state[STATE_REDUCER_KEY])
+    const { cropData, openUploaderModal = false, openUploaderModalNewProd = false, cropDataNewProd = null } = useSelector(state => state[STATE_REDUCER_KEY]);
     useEffect(() => {
         if (id) {
             dispatch(fetchProductById(id));
