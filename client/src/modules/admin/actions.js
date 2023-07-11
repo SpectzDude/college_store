@@ -1,6 +1,6 @@
 import { dismissNotification } from "reapop";
 import { errorNotify, loaderNotify, successNotify } from "../../utils/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi } from "./api";
 import { getNavigator } from "../common/selectors";
 
 
@@ -126,7 +126,7 @@ export const fetchPendingOrdersList = (data) => {
 export const dashboardStats = () => {
     return async (dispatch) => {
         try {
-            // await fetchPendingOrdersListApi(dispatch, data);
+            await dashboardStatsApi(dispatch);
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }

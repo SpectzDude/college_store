@@ -7,7 +7,7 @@ export const registerAsync = (data) => {
             await registerApi(dispatch, data);
             const state = getState(); // Get the current state
             const navigator = getNavigator(state);
-            navigator("/home");
+            navigator("/login");
         } catch (error) {
             // Handle failure
         }

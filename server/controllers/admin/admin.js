@@ -7,6 +7,7 @@ import cloudinary from "../../config/imageUpload.js";
 import { verifyFile } from "../../config/utils.js";
 import Orders from "../../models/Orders.js";
 import Student from "../../models/Student.js";
+import User from "../../models/User.js";
 
 function generateRandomProduct() {
     const product = {
@@ -120,6 +121,32 @@ export const getPendingOrders = async (req, res) => {
         res.status(200).json({ data: formattedOrders });
     } catch (error) {
         res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
+
+export const getCount = async (model, filter = {}) => {
+    try {
+        return await model.countDocuments(filter);
+    } catch (error) {
+        console.error(`Error counting documents in ${model.collection.name}`, error);
+        return null;
+    }
+};
+export const getDashboardStats = async (req, res) => {
+    try {
+        const userCount = await User.countDocuments();
+        const studentCount = await Student.countDocuments()
+        const productCount = await Products.countDocuments()
+        const pendingOrder = await Orders.countDocuments({ status: "PENDING" });
+        const orderInTransit = await Orders.countDocuments({ status: "ON_TRANSIT" });
+        const deliveryPending = await Orders.countDocuments({ status: "OUT_FOR_DELIVERY", deliveredStatus: false });
+        const delivered = await Orders.countDocuments({ deliveredStatus: true });
+        console.log("delivered", delivered)
+        const approvalPending = await Student.find({ approvedStatus: false });
+        const data = { userCount, studentCount, productCount, pendingOrder, orderInTransit, deliveryPending: deliveryPending.length, delivered: delivered.length, approvalPending: approvalPending.length }
+        res.status(200).json({ data });
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
     }
 };
 

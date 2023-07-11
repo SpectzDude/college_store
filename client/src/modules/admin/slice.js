@@ -44,14 +44,14 @@ const initialState = {
     cropDataNewProd: null,
     openUploaderModalNewProd: false,
     dashboard: {
-        userCount: 14,
-        studentCount: 12,
-        productCount: 22,
-        pendingOrder: 22,
-        orderInTransit: 11,
-        deliveryPending: 12,
-        delivered: 11,
-        approvalPending: 12
+        userCount: 0,
+        studentCount: 0,
+        productCount: 0,
+        pendingOrder: 0,
+        orderInTransit: 0,
+        deliveryPending: 0,
+        delivered: 0,
+        approvalPending: 0
 
     }
 
@@ -111,6 +111,10 @@ const slice = createSlice({
             .addCase(ACTION_TYPES.FETCH_ORDERS_SUCCESS, (state, { payload }) => {
                 state.pendingOrdersList.requestInProgress = false;
                 state.pendingOrdersList.data = payload.data;
+            })
+            .addCase(ACTION_TYPES.DASHBOARD_STATS_SUCCESS, (state, { payload }) => {
+                state.dashboard = payload.data;
+
             });
     }
 

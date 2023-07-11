@@ -156,3 +156,18 @@ export const fetchPendingOrdersListApi = async (dispatch, data) => {
         // Handle failure
     }
 };
+
+export const dashboardStatsApi = async (dispatch) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/dashboard",
+            [ACTION_TYPES.DASHBOARD_STATS_REQUEST, ACTION_TYPES.DASHBOARD_STATS_SUCCESS, ACTION_TYPES.DASHBOARD_STATS_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
