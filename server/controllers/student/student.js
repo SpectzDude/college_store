@@ -49,8 +49,6 @@ export const getOrdersByUserId = (async (req, res) => {
     const userID = mongoose.Types.ObjectId(req.userId);
     try {
         const student = await Student.findOne({ user: userID });
-        console.log("userID", userID);
-        console.log("student", student)
         if (!student) return res.status(404).json({ message: "No Student details found in the list" })
         const orders = await Orders.find({ studentId: student._id })
             .populate('productId', 'title price brand category')

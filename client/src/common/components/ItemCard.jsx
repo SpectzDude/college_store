@@ -67,7 +67,15 @@ const ItemCard = ({ title = "", brand = "", subtitle = "", stock = 0, discountPe
           </Typography>
         </Box>
       </Box>
-      <Tooltip title={description}>
+      <Box sx={{ display: "flex" }}>
+        <Typography display="inline" variant="p" sx={{ color: "#000" }}>
+          {"Description: "}
+        </Typography>
+        <Typography display="inline" variant="p" sx={{ color: "#5a5a5a" }}>
+          {description}
+        </Typography>
+      </Box>
+      <Tooltip title={"More Details"}>
         <ExpandMoreIcon sx={{ cursor: "pointer" }} />
       </Tooltip>
     </Box>
