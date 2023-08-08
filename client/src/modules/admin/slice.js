@@ -31,7 +31,6 @@ const initialState = {
     pendingOrdersList: {
         requestInProgress: false,
         data: []
-
     },
     deliveryList: {
         requestInProgress: false,
@@ -52,7 +51,6 @@ const initialState = {
         deliveryPending: 0,
         delivered: 0,
         approvalPending: 0
-
     }
 
 };
@@ -115,9 +113,13 @@ const slice = createSlice({
             .addCase(ACTION_TYPES.DASHBOARD_STATS_SUCCESS, (state, { payload }) => {
                 state.dashboard = payload.data;
 
+            })
+            .addCase(ACTION_TYPES.USERS_LIST_SUCCESS, (state, { payload }) => {
+                state.usersList.data = payload.data;
+
             });
     }
 
-}); //FETCH_ORDERS_SUCCESS
+}); //USERS_LIST_SUCCESS
 
 export const { actions, reducer } = slice;

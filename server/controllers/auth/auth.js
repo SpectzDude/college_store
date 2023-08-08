@@ -23,7 +23,7 @@ export const login = async (req, res) => {
 export const register = async (req, res) => {
     // const { error = {}, value = {} } = registerValidator(req.body);
     // if (error) return res.status(400).json({ message: error.details });
-    const { email, password, collegeId } = req.body;
+    const { email, password, collegeId, phoneNumber } = req.body;
     const credentials = _.cloneDeep(req.body);
     const profileDetails = _.omit(credentials, ["password", "confirmPassword"]);
     try {
@@ -36,8 +36,15 @@ export const register = async (req, res) => {
         if (!email) {
             return res.status(400).json({ message: "email field required" });
         }
-        const isExists = await User.findOne({ email });
+        const isExists = await User.exists({ email });
         if (isExists) return res.status(409).json({ message: ERROR_MSG.ALREADY_EXISTS });
+
+        const isCollegeIdExists = await User.exists({ collegeId });
+        if (isCollegeIdExists) return res.status(409).json({ message: "College ID already exists" });
+
+        const isPhoneNumber = await User.exists({ phoneNumber });
+        if (isPhoneNumber) return res.status(409).json({ message: "Phone Number already exists" });
+
         const hashedPassword = await bcrypt.hash(password, 1);
         const result = await User.create({ ...profileDetails, password: hashedPassword });
         const student = await Student.create({ user: result._id, collegeId: collegeId });

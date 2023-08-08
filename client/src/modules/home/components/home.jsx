@@ -4,17 +4,21 @@ import React, { useEffect } from "react";
 import Header from "../../../common/components/Header";
 import ItemCard from "../../../common/components/ItemCard";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
-import { connect, useDispatch } from "react-redux";
-import { buyNow, fetchProductList, preOrder } from "../actions";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { buyNow, fetchProductList, fetchStudentProfile, preOrder } from "../actions";
 import { getProducts } from "../selectors";
+import Overlay from "./OverLay";
+import { STATE_REDUCER_KEY } from "../constants";
 
 const UserHome = (props) => {
-    const { items = [], fetchProductListAsync } = props;
+    const { items = [], fetchProductListAsync, fetchStudentAsync } = props;
     const theme = useTheme();
     const dispatch = useDispatch();
     const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
+    const { approvedStatus = false } = useSelector(state => state[STATE_REDUCER_KEY].student);
     useEffect(() => {
         fetchProductListAsync();
+        fetchStudentAsync();
     }, []);
     const handleBuyNow = ({ item, buyOption }) => {
         if (buyOption) {
@@ -24,6 +28,7 @@ const UserHome = (props) => {
         }
     };
     return <Box>
+        <Overlay active={approvedStatus} />
         <Box m="20px">
             <Box
                 display={smScreen ? "flex" : "block"}
@@ -91,9 +96,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchProductListAsync: () => dispatch(fetchProductList())
+        fetchProductListAsync: () => dispatch(fetchProductList()),
+        fetchStudentAsync: () => dispatch(fetchStudentProfile())
     };
 };
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserHome);
+

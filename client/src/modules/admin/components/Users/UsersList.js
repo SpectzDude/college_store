@@ -2,8 +2,8 @@ import React, { useEffect, useMemo } from "react";
 import { actions as sliceActions } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteProd, fetchProductList } from "../../actions";
-import { AddCircleOutline, Delete, Edit, ViewCarousel } from "@mui/icons-material";
+import { deleteProd, fetchUserList, handleApprove, handleBlock, handleReject, handleUnBlock } from "../../actions";
+import { AddCircleOutline, Approval, Cancel, Delete, Lock, LockOpen } from "@mui/icons-material";
 import { STATE_REDUCER_KEY, TABLE_COLUMN_USER, userColumnOrder } from "../../constants";
 import CustomListMenu from "../../../../common/components/CustomListMenu";
 import { REACT_TABLE_COMMON_OPTIONS } from "../../../common/constants";
@@ -13,7 +13,7 @@ import CustomReactTable from "../../../../common/components/CustomTable";
 const Users = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { data: productList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].usersList);
+    const { data: usersList = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].usersList);
 
     // eslint-disable-next-line no-unused-vars
     const columns = useMemo(
@@ -24,11 +24,18 @@ const Users = () => {
         let item = [1, 2];
         let customActions = [];
 
-        if (item[1]) {
-            customActions.push({ title: "View", icon: <ViewCarousel fontSize="small" />, handleClick: () => navigate(`${row.original._id}/view`) });
+        if (!row.original.approvedStatus) {
+            customActions.push({ title: "Approve", icon: <Approval fontSize="small" />, handleClick: () => dispatch(handleApprove(row.original._id)) });
         }
-        if (item[1]) {
-            customActions.push({ title: "Edit", icon: <Edit fontSize="small" />, handleClick: () => navigate(`${row.original._id}/edit`) });
+        if (row.original.approvedStatus) {
+            customActions.push({ title: "Decline", icon: <Cancel fontSize="small" />, handleClick: () => dispatch(handleReject(row.original._id)) });
+        }
+
+        if (row.original.user.status) {
+            customActions.push({ title: "Block", icon: <Lock fontSize="small" />, handleClick: () => handleBlock(row.original.user._id) });
+        }
+        if (!row.original.user.status) {
+            customActions.push({ title: "UnBlock", icon: <LockOpen fontSize="small" />, handleClick: () => handleUnBlock(row.original.user._id) });
         }
         if (item[1]) {
             customActions.push({
@@ -88,7 +95,7 @@ const Users = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchProductList());
+        dispatch(fetchUserList());
         return (() => {
             dispatch(sliceActions.clearAll());
         }
@@ -97,7 +104,7 @@ const Users = () => {
     return (
         <>
             <CustomReactTable
-                data={productList}
+                data={usersList}
                 columns={columns}
                 options={options}
                 enableRowVirtualization={false}

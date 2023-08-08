@@ -151,7 +151,52 @@ export const getDashboardStats = async (req, res) => {
 };
 
 
+export const getUsersAll = async (req, res) => {
+    try {
+        const users = await Student.find()
+            .populate({
+                path: 'user',
+                select: 'fullName email status',
+            })
+        if (users.length < 1) {
+            return res.status(400).json({ message: "No Users found" });
+        }
+        res.status(200).json({ data: users });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
 
+export const approveUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await Student.findOneAndUpdate(
+            { _id: id },
+            { $set: { approvedStatus: true } },
+            { new: true }
+        );
+        if (!user.approvedStatus) {
+            return res.status(400).json({ message: "Not Changed" });
+        }
+        res.status(200).json({ data: true });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
 
-
-
+export const restrictUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await Student.findOneAndUpdate(
+            { _id: id },
+            { $set: { approvedStatus: false } },
+            { new: true }
+        );
+        if (user.approvedStatus) {
+            return res.status(400).json({ message: "Cannot Restrict User" });
+        }
+        res.status(200).json({ data: true });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};

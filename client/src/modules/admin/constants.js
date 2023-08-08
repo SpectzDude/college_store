@@ -127,20 +127,42 @@ export const TABLE_COLUMN_USER = [
     {
         id: "studentName",
         header: "Student Name",
-        accessorKey: "studentName",
+        accessorKey: "user.fullName",
+        size: 150
+    },
+    {
+        id: "collegeId",
+        header: "College ID",
+        accessorKey: "collegeId",
+        size: 150
+    },
+    {
+        id: "email",
+        header: "Student Email",
+        accessorKey: "user.email",
         size: 150
     },
     {
         id: "status",
-        header: "Status",
-        accessorKey: "status",
+        header: "Profile Activity Status",
+        accessorFn: ({ user }) => user.status ? "Active" : "Blocked",
+        size: 150
+    },
+    {
+        id: "approvedStatus",
+        header: "Approved Status",
+        accessorFn: ({ approvedStatus }) => approvedStatus ? "Approved" : "Declined",
         size: 150
     }
 
 ];
 
+
 export const userColumnOrder = [
     "studentName",
-    "Status",
+    "collegeId",
+    "email",
+    "status",
+    "approvedStatus",
     "mrt-row-actions"
 ];

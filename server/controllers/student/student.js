@@ -59,3 +59,15 @@ export const getOrdersByUserId = (async (req, res) => {
         res.status(500).json({ message: "Something went wrong" });
     }
 })
+
+export const getStudentProfile = (async (req, res) => {
+    const userID = mongoose.Types.ObjectId(req.userId);
+    try {
+        const student = await Student.findOne({ user: userID });
+        if (!student) return res.status(400).json({ message: "No Student Record found" });
+        res.status(200).json({ data: student })
+    } catch (error) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+})
+

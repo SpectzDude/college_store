@@ -1,5 +1,5 @@
 import { errorNotify, successNotify } from "../../utils/repopUtils";
-import { buyNowApi, fetchProductApi } from "./api";
+import { buyNowApi, fetchProductApi, fetchStudentProfileApi } from "./api";
 
 
 export const fetchProductList = () => {
@@ -32,6 +32,16 @@ export const preOrder = (data) => {
             dispatch(fetchProductList());
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+export const fetchStudentProfile = () => {
+    return async (dispatch) => {
+        try {
+            await fetchStudentProfileApi(dispatch);
+        } catch (error) {
+            // Handle failure
         }
     };
 };

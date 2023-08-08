@@ -1,6 +1,6 @@
 import { dismissNotification } from "reapop";
 import { errorNotify, loaderNotify, successNotify } from "../../utils/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi, fetchUserListApi, handleApproveApi, handleRejectApi, handleBlockApi, handleUnBlockApi } from "./api";
 import { getNavigator } from "../common/selectors";
 
 
@@ -127,6 +127,65 @@ export const dashboardStats = () => {
     return async (dispatch) => {
         try {
             await dashboardStatsApi(dispatch);
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+//fetchUserList
+export const fetchUserList = () => {
+    return async (dispatch) => {
+        try {
+            await fetchUserListApi(dispatch);
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+//handleApprove
+export const handleApprove = (id) => {
+    return async (dispatch) => {
+        try {
+            await handleApproveApi(dispatch, id);
+            dispatch(successNotify({ message: "Student Approved" }));
+            dispatch(fetchUserList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+//handleReject
+export const handleReject = (id) => {
+    return async (dispatch) => {
+        try {
+            await handleRejectApi(dispatch, id);
+            dispatch(successNotify({ message: "Student Rejected from accessing application" }));
+            dispatch(fetchUserList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+
+export const handleBlock = (id) => {
+    return async (dispatch) => {
+        try {
+            await handleBlockApi(dispatch, id);
+            dispatch(successNotify({ message: "Student Blocked" }));
+            dispatch(fetchUserList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+export const handleUnBlock = (id) => {
+    return async (dispatch) => {
+        try {
+            await handleUnBlockApi(dispatch, id);
+            dispatch(successNotify({ message: "Student Unblocked" }));
+            dispatch(fetchUserList());
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }

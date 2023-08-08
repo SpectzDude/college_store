@@ -171,3 +171,78 @@ export const dashboardStatsApi = async (dispatch) => {
         // Handle failure
     }
 };
+
+export const fetchUserListApi = async (dispatch) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/user",
+            [ACTION_TYPES.USERS_LIST_REQUEST, ACTION_TYPES.USERS_LIST_SUCCESS, ACTION_TYPES.USERS_LIST_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const handleApproveApi = async (dispatch, id) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/user/approve/" + id,
+            [ACTION_TYPES.APPROVE_STUDENT_REQUEST, ACTION_TYPES.APPROVE_STUDENT_SUCCESS, ACTION_TYPES.APPROVE_STUDENT_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const handleRejectApi = async (dispatch, id) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/user/reject/" + id,
+            [ACTION_TYPES.REJECT_STUDENT_REQUEST, ACTION_TYPES.REJECT_STUDENT_SUCCESS, ACTION_TYPES.REJECT_STUDENT_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const handleBlockApi = async (dispatch, id) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/user/block/" + id,
+            [ACTION_TYPES.BLOCK_STUDENT_REQUEST, ACTION_TYPES.BLOCK_STUDENT_SUCCESS, ACTION_TYPES.BLOCK_STUDENT_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const handleUnBlockApi = async (dispatch, id) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/user/un-block/" + id,
+            [ACTION_TYPES.UN_BLOCK_STUDENT_REQUEST, ACTION_TYPES.UN_BLOCK_STUDENT_SUCCESS, ACTION_TYPES.UN_BLOCK_STUDENT_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};

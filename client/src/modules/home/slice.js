@@ -7,6 +7,9 @@ const initialState = {
     products: {
         requestInProgress: false,
         data: []
+    },
+    student: {
+        approvedStatus: true
     }
 };
 
@@ -28,6 +31,9 @@ const slice = createSlice({
             })
             .addCase(ACTION_TYPES.FETCH_PRODUCT_LIST_FAILURE, (state) => {
                 state.products.requestInProgress = false;
+            })
+            .addCase(ACTION_TYPES.GET_STUDENT_PROFILE_SUCCESS, (state, { payload = {} }) => {
+                state.student = payload.data;
             });
     }
 });

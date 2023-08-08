@@ -47,11 +47,11 @@ const Register = (props) => {
   });
   return <Box style={stylesContainer}>
     <Box sx={{ position: "absolute" }}>
-      <Box sx={{ position: "relative", top: "-40px", left: "5px" }}>
+      <Box sx={{ position: "relative", top: "-30px", left: "5px" }}>
         <img src={UserLogo} alt="logo" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
       </Box>
     </Box>
-    <Box sx={{ display: "flex", borderRadius: "10px", bgcolor: "secondary.main", flexDirection: "column", p: 3, height: "80vh", overflowY: "scroll" }}>
+    <Box sx={{ display: "flex", mt: 3, borderRadius: "10px", bgcolor: "secondary.main", flexDirection: "column", p: 3, height: "80vh", overflowY: "scroll", width: "500px" }}>
       <Typography variant="h2" py={2}>Registration Form</Typography>
       <form onSubmit={formik.handleSubmit}>
         <div className="details">
@@ -114,7 +114,7 @@ const Register = (props) => {
                 name="collegeId"
                 label="College ID"
                 type="text"
-                onChange={(event) =>{
+                onChange={(event) => {
                   const uppercaseValue = event.target.value.toUpperCase();
                   formik.handleChange(event);
                   formik.setFieldValue("collegeId", uppercaseValue);

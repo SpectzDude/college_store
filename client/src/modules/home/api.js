@@ -29,3 +29,17 @@ export const buyNowApi = async (dispatch, data) => {
         // Handle failure
     }
 };
+//fetchStudentProfileApi
+export const fetchStudentProfileApi = async (dispatch) => {
+    try {
+        await makeApiCall(
+            dispatch,
+            "/student/profile",
+            [ACTION_TYPES.GET_STUDENT_PROFILE_REQUEST, ACTION_TYPES.GET_STUDENT_PROFILE_SUCCESS, ACTION_TYPES.GET_STUDENT_PROFILE_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
