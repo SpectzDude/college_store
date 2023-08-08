@@ -234,3 +234,16 @@ export const unBlockUser = async (req, res) => {
         res.status(500).json({ message: error.message || "Something went wrong" });
     }
 };
+
+export const deleteUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const student = await Student.findOne({ _id: id });
+        if (!student) return res.status(400).json({ message: "No User found for Delete" });
+        await User.deleteOne({ _id: student.user })
+        await Student.deleteOne({ _id: id })
+        res.status(200).json({ data: true, message: "Deleted" });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};

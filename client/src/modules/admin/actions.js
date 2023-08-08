@@ -1,6 +1,6 @@
 import { dismissNotification } from "reapop";
 import { errorNotify, loaderNotify, successNotify } from "../../utilsReact/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi, fetchUserListApi, handleApproveApi, handleRejectApi, handleBlockApi, handleUnBlockApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi, fetchUserListApi, handleApproveApi, handleRejectApi, handleBlockApi, handleUnBlockApi, deleteUserUserApi } from "./api";
 import { getNavigator } from "../common/selectors";
 
 
@@ -185,6 +185,19 @@ export const handleUnBlock = (id) => {
         try {
             await handleUnBlockApi(dispatch, id);
             dispatch(successNotify({ message: "Student Unblocked" }));
+            dispatch(fetchUserList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+//deleteUser
+export const deleteUser = (id) => {
+    return async (dispatch) => {
+        try {
+            await deleteUserUserApi(dispatch, id);
+            dispatch(successNotify({ message: "Profile Deleted Unblocked" }));
             dispatch(fetchUserList());
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));

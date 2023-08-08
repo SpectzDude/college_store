@@ -246,3 +246,19 @@ export const handleUnBlockApi = async (dispatch, id) => {
         // Handle failure
     }
 };
+//deleteUserUserApi
+
+export const deleteUserUserApi = async (dispatch, id) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/user/delete/" + id,
+            [ACTION_TYPES.DELETE_PROFILE_REQUEST, ACTION_TYPES.DELETE_PROFILE_SUCCESS, ACTION_TYPES.DELETE_PROFILE_FAILURE],
+            "DELETE"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};

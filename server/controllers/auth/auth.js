@@ -39,7 +39,8 @@ export const register = async (req, res) => {
         const isExists = await User.exists({ email });
         if (isExists) return res.status(409).json({ message: ERROR_MSG.ALREADY_EXISTS });
 
-        const isCollegeIdExists = await User.exists({ collegeId });
+        const isCollegeIdExists = await Student.exists({ collegeId });
+        console.log("isCollegeIdExists", isCollegeIdExists)
         if (isCollegeIdExists) return res.status(409).json({ message: "College ID already exists" });
 
         const isPhoneNumber = await User.exists({ phoneNumber });

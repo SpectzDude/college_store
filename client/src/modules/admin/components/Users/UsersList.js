@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { actions as sliceActions } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { deleteProd, fetchUserList, handleApprove, handleBlock, handleReject, handleUnBlock } from "../../actions";
+import { deleteUser, fetchUserList, handleApprove, handleBlock, handleReject, handleUnBlock } from "../../actions";
 import { AddCircleOutline, Approval, Cancel, Delete, Lock, LockOpen } from "@mui/icons-material";
 import { STATE_REDUCER_KEY, TABLE_COLUMN_USER, userColumnOrder } from "../../constants";
 import CustomListMenu from "../../../../common/components/CustomListMenu";
@@ -40,7 +40,7 @@ const Users = () => {
         if (item[1]) {
             customActions.push({
                 title: "Delete", icon: <Delete fontSize="small" />,
-                handleClick: () => dispatch(deleteProd(row.original._id))
+                handleClick: () => dispatch(deleteUser(row.original._id))
             });
         }
         return customActions;
