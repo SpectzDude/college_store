@@ -1,4 +1,4 @@
-import { errorNotify, successNotify } from "../../utils/repopUtils";
+import { errorNotify, successNotify } from "../../utilsReact/repopUtils";
 import { buyNowApi, fetchProductApi, fetchStudentProfileApi } from "./api";
 
 

@@ -6,7 +6,7 @@ import { routes } from "./modules/routes";
 
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
-import { routePermission } from "./utils/permissionUtils";
+import { routePermission } from "./utilsReact/permissionUtils";
 import { STATE_REDUCER_KEY } from "./modules/common/constants";
 
 const PermittedRoutes = () => {

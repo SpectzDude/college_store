@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { PersistGate } from "reduxjs-toolkit-persist/integration/react";
 import { Provider } from "react-redux";
-import { persister, store } from "./utils/store";
+import { persister, store } from "./utilsReact/store";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import ReactNotifications from "./modules/common/component/ReactNotification";
 import PermittedRoutes from "./PermittedRoutes";

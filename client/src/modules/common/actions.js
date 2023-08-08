@@ -1,5 +1,5 @@
 
-import { successNotify } from "../../utils/repopUtils";
+import { successNotify } from "../../utilsReact/repopUtils";
 import { getNavigator } from "../common/selectors";
 import { ACTION_TYPES } from "../common/actionTypes";
 import { STORAGE_KEYS } from "./constants";

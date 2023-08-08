@@ -1,5 +1,5 @@
 import { dismissNotification } from "reapop";
-import { errorNotify, loaderNotify, successNotify } from "../../utils/repopUtils";
+import { errorNotify, loaderNotify, successNotify } from "../../utilsReact/repopUtils";
 import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi, fetchUserListApi, handleApproveApi, handleRejectApi, handleBlockApi, handleUnBlockApi } from "./api";
 import { getNavigator } from "../common/selectors";
 
