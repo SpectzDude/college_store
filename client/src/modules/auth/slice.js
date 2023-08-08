@@ -3,8 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { STATE_REDUCER_KEY } from "./constants";
 import { ACTION_TYPES } from "./actionTypes";
 import { STORAGE_KEYS } from "../common/constants";
-
+import { ACTION_TYPES as COMMON_ACTION } from "../common/actionTypes";
 const initialState = {
+    isLoggedIn: false,
     signIn: {
         requestInProgress: false,
         data: {
@@ -42,6 +43,7 @@ const slice = createSlice({
                 const { token = "" } = payload;
                 localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, token);
                 state.signIn.requestInProgress = false;
+                state.isLoggedIn = true;
             }).addCase(ACTION_TYPES.LOGIN_FAILURE, (state) => {
                 state.signIn.requestInProgress = false;
             }).addCase(ACTION_TYPES.REGISTER_REQUEST, (state) => {
@@ -52,6 +54,9 @@ const slice = createSlice({
                 state.signUp.requestInProgress = false;
             }).addCase(ACTION_TYPES.REGISTER_FAILURE, (state) => {
                 state.signUp.requestInProgress = false;
+            })
+            .addCase(COMMON_ACTION.LOG_OUT, (state) => {
+                state.isLoggedIn = false;
             });
     }
 });

@@ -1,5 +1,5 @@
 import express from 'express';
-import { addDummyProducts, addProducts, getProductById, updateProductById, deleteProductById, getPendingOrders, getDashboardStats, getUsersAll, approveUser, restrictUser } from '../controllers/admin/admin.js';
+import { addDummyProducts, addProducts, getProductById, updateProductById, deleteProductById, getPendingOrders, getDashboardStats, getUsersAll, approveUser, restrictUser, unBlockUser, blockUser } from '../controllers/admin/admin.js';
 import { getProducts } from '../controllers/student/student.js';
 import imageROuter from "./image.js"
 import multer from 'multer';
@@ -19,6 +19,8 @@ router.get("/dashboard", getDashboardStats);
 router.get("/user", getUsersAll);
 router.get("/user/approve/:id", approveUser);
 router.get("/user/reject/:id", restrictUser);
+router.get("/user/block/:id", blockUser);
+router.get("/user/un-block/:id", unBlockUser);
 
 // Image
 router.use("/image", imageROuter);

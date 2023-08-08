@@ -1,5 +1,6 @@
 import { getProfile, loginApi, registerApi } from "./api";
 import { getHomePath, getNavigator } from "../common/selectors";
+import { getLoggedStatus } from "./selectors";
 
 export const registerAsync = (data) => {
     return async (dispatch, getState) => {
@@ -33,14 +34,17 @@ export const loginAsync = (data) => {
     return async (dispatch, getState) => {
         try {
             await loginApi(dispatch, data);
-            dispatch(getProfileAsync());
-            setTimeout(() => {
-                const state = getState();
-                const navigator = getNavigator(state);
-                const path = getHomePath(state);
-                navigator(`${path}`);
-                window.location.reload();
-            }, 2300);
+            const state = getState();
+            const isLoggedIn = getLoggedStatus(state);
+            if (isLoggedIn) {
+                dispatch(getProfileAsync());
+                setTimeout(() => {
+                    const navigator = getNavigator(state);
+                    const path = getHomePath(state);
+                    navigator(`${path}`);
+                    window.location.reload();
+                }, 2300);
+            }
         } catch (error) {
             // Handle failure
         }

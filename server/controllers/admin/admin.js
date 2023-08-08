@@ -200,3 +200,37 @@ export const restrictUser = async (req, res) => {
         res.status(500).json({ message: error.message || "Something went wrong" });
     }
 };
+
+export const blockUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.findOneAndUpdate(
+            { _id: id },
+            { $set: { status: false } },
+            { new: true }
+        );
+        if (user.status) {
+            return res.status(400).json({ message: "Cannot Block User" });
+        }
+        res.status(200).json({ data: true, message: "Blocked" });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
+
+export const unBlockUser = async (req, res) => {
+    const { id } = req.params
+    try {
+        const user = await User.findOneAndUpdate(
+            { _id: id },
+            { $set: { status: true } },
+            { new: true }
+        );
+        if (!user.status) {
+            return res.status(400).json({ message: "Cannot Un-Block User" });
+        }
+        res.status(200).json({ data: true, message: "Unblocked" });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};

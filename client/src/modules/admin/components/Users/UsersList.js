@@ -32,10 +32,10 @@ const Users = () => {
         }
 
         if (row.original.user.status) {
-            customActions.push({ title: "Block", icon: <Lock fontSize="small" />, handleClick: () => handleBlock(row.original.user._id) });
+            customActions.push({ title: "Block", icon: <Lock fontSize="small" />, handleClick: () => dispatch(handleBlock(row.original.user._id)) });
         }
         if (!row.original.user.status) {
-            customActions.push({ title: "UnBlock", icon: <LockOpen fontSize="small" />, handleClick: () => handleUnBlock(row.original.user._id) });
+            customActions.push({ title: "UnBlock", icon: <LockOpen fontSize="small" />, handleClick: () => dispatch(handleUnBlock(row.original.user._id)) });
         }
         if (item[1]) {
             customActions.push({
