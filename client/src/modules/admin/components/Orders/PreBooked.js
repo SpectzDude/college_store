@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 import { actions as sliceActions } from "../../slice";
 import { useDispatch, useSelector } from "react-redux";
-import { approveOrder, deleteOrder, fetchPendingOrdersList } from "../../actions";
+import { approveOrder, deleteOrder, fetchPreBookedOrder } from "../../actions";
 import { Delete, ViewCarousel } from "@mui/icons-material";
 import { STATE_REDUCER_KEY, ORDERS_TABLE_COLUMN, pendingOrderColList } from "../../constants";
 import CustomListMenu from "../../../../common/components/CustomListMenu";
@@ -9,7 +9,7 @@ import { REACT_TABLE_COMMON_OPTIONS } from "../../../common/constants";
 import CustomReactTable from "../../../../common/components/CustomTable";
 
 
-const PendingOrders = () => {
+const PreBooked = () => {
     const dispatch = useDispatch();
     const { data: orders = [], requestInProgress = false } = useSelector(state => state[STATE_REDUCER_KEY].pendingOrdersList);
     const handleDelete = (id) => {
@@ -83,7 +83,7 @@ const PendingOrders = () => {
     };
 
     useEffect(() => {
-        dispatch(fetchPendingOrdersList({ key: "PENDING" }));
+        dispatch(fetchPreBookedOrder());
         return (() => {
             dispatch(sliceActions.clearAll());
         }
@@ -97,11 +97,11 @@ const PendingOrders = () => {
                 options={options}
                 enableRowVirtualization={false}
                 enableCustomTableFilter={true}
-                title={"Pending Orders List"}
+                title={"Pre Booked Orders"}
             />
         </>
 
     );
 };
 
-export default PendingOrders;
+export default PreBooked;

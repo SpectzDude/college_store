@@ -74,9 +74,6 @@ function formatDate(dateString) {
 
 export const ORDERS_TABLE_COLUMN = [
     {
-        id: "id"
-    },
-    {
         id: "title",
         header: "Product Name",
         accessorKey: "title",

@@ -17,11 +17,11 @@ export const getProducts = (async (req, res) => {
 
 export const buyNow = (async (req, res) => {
     const userId = mongoose.Types.ObjectId(req.userId);
-    const { _id: productId } = req.body;
+    const { _id: productId, orderType = "" } = req.body;
     try {
         const student = await Student.findOne({ user: userId })
         const currDate = new Date()
-        const order = await Orders.create({ studentId: student._id, productId, date: currDate });
+        const order = await Orders.create({ studentId: student._id, productId, date: currDate, orderType });
         const product = await Products.findOne({ _id: productId });
         if (!product) {
             return res.status(404).json({ message: "Product not found" })

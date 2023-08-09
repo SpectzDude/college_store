@@ -143,7 +143,7 @@ export const uploadNewProductImageApi = async (dispatch, data) => {
 };
 
 export const fetchPendingOrdersListApi = async (dispatch, data) => {
-    const { key = "PENDING" } = data;
+    const { key = "" } = data;
     try {
         await makeApiCall(
             dispatch,
@@ -256,6 +256,51 @@ export const deleteUserUserApi = async (dispatch, id) => {
             "/admin/user/delete/" + id,
             [ACTION_TYPES.DELETE_PROFILE_REQUEST, ACTION_TYPES.DELETE_PROFILE_SUCCESS, ACTION_TYPES.DELETE_PROFILE_FAILURE],
             "DELETE"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const deleteOrderApi = async (dispatch, id) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/order/delete/" + id,
+            [ACTION_TYPES.DELETE_ORDER_REQUEST, ACTION_TYPES.DELETE_ORDER_SUCCESS, ACTION_TYPES.DELETE_ORDER_FAILURE],
+            "DELETE"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const approveOrderApi = async (dispatch, id) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/order/approve/" + id,
+            [ACTION_TYPES.APPROVE_ORDER_REQUEST, ACTION_TYPES.APPROVE_ORDER_SUCCESS, ACTION_TYPES.APPROVE_ORDER_FAILURE],
+            "GET"
+        );
+        // Handle success
+    } catch (error) {
+        // Handle failure
+    }
+};
+
+export const fetchPreBookedOrderApi = async (dispatch) => {
+
+    try {
+        await makeApiCall(
+            dispatch,
+            "/admin/pre-booked",
+            [ACTION_TYPES.FETCH_ORDERS_REQUEST, ACTION_TYPES.FETCH_ORDERS_SUCCESS, ACTION_TYPES.FETCH_ORDERS_FAILURE],
+            "GET"
         );
         // Handle success
     } catch (error) {

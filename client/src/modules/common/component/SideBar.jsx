@@ -1,6 +1,6 @@
 import { List, ListItemButton, ListItemText } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
-import { CheckBoxOutlineBlankSharp, Dashboard, Home, ListAltOutlined, People, Person2Outlined, ProductionQuantityLimitsSharp } from "@mui/icons-material";
+import { BookmarkAdded, CheckBoxOutlineBlankSharp, Dashboard, Home, ListAltOutlined, People, Person2Outlined, ProductionQuantityLimitsSharp } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { STATE_REDUCER_KEY } from "../constants";
 export let active = {
@@ -73,10 +73,15 @@ const SideBar = () => {
                         <List sx={{ px: 0.5, py: 0 }}>
                             <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/orders")}>
                                 <CheckBoxOutlineBlankSharp />
-                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Orders"}</ListItemText>
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Pending Orders"}</ListItemText>
                             </ListItemButton>
                         </List>
-
+                        <List sx={{ px: 0.5, py: 0 }}>
+                            <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/pre-booked")}>
+                                <BookmarkAdded />
+                                <ListItemText sx={{ px: 1, fontSize: "14px !!important" }}>{"Pre Booked Orders"}</ListItemText>
+                            </ListItemButton>
+                        </List>
                         <List sx={{ px: 0.5, py: 0 }}>
                             <ListItemButton sx={{ ...analyticsStyle, px: 1, py: 0, height: "47px", fontSize: "14px", my: 0.4 }} onClick={() => navigate("../admin/users")}>
                                 <People />

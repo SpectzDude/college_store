@@ -16,15 +16,18 @@ const UserHome = (props) => {
     const dispatch = useDispatch();
     const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
     const { approvedStatus = false } = useSelector(state => state[STATE_REDUCER_KEY].student);
+    const orderType = ["REGULAR", "PRE_BOOKED"];
     useEffect(() => {
         fetchProductListAsync();
         fetchStudentAsync();
     }, []);
     const handleBuyNow = ({ item, buyOption }) => {
         if (buyOption) {
-            dispatch(buyNow(item));
+            let data = { ...item, orderType: orderType[0] };
+            dispatch(buyNow(data));
         } else {
-            dispatch(preOrder(item));
+            let data = { ...item, orderType: orderType[1] };
+            dispatch(preOrder(data));
         }
     };
     return <Box>

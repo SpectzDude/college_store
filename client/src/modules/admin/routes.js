@@ -5,6 +5,7 @@ import ViewEditUser from "./components/Users/ViewEditUser";
 import PendingOrders from "./components/Orders/PendingOrders";
 import DeliveryOrders from "./components/Orders/DeliveryOrders";
 import Dashboard from "./components/Dashboard";
+import PreBooked from "./components/Orders/PreBooked";
 
 const routes = [
     {
@@ -48,6 +49,10 @@ const routes = [
             {
                 path: "/admin/orders/delivery",
                 element: <DeliveryOrders />
+            },
+            {
+                path: "/admin/pre-booked",
+                element: <PreBooked />
             }
         ]
     }

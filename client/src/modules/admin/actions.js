@@ -1,6 +1,6 @@
 import { dismissNotification } from "reapop";
 import { errorNotify, loaderNotify, successNotify } from "../../utilsReact/repopUtils";
-import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi, fetchUserListApi, handleApproveApi, handleRejectApi, handleBlockApi, handleUnBlockApi, deleteUserUserApi } from "./api";
+import { createProductApi, deleteProductByIdApi, editProducts, fetchAllProducts, fetchProductByIdApi, createDummyApi, editUserApi, uploadProductImageApi, uploadNewProductImageApi, fetchPendingOrdersListApi, dashboardStatsApi, fetchUserListApi, handleApproveApi, handleRejectApi, handleBlockApi, handleUnBlockApi, deleteUserUserApi, deleteOrderApi, approveOrderApi, fetchPreBookedOrderApi } from "./api";
 import { getNavigator } from "../common/selectors";
 
 
@@ -111,7 +111,6 @@ export const uploadNewProductImage = (data) => {
     };
 };
 
-//fetchPendingOrdersList
 
 export const fetchPendingOrdersList = (data) => {
     return async (dispatch) => {
@@ -192,13 +191,48 @@ export const handleUnBlock = (id) => {
     };
 };
 
-//deleteUser
+
 export const deleteUser = (id) => {
     return async (dispatch) => {
         try {
             await deleteUserUserApi(dispatch, id);
             dispatch(successNotify({ message: "Profile Deleted Unblocked" }));
             dispatch(fetchUserList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+export const deleteOrder = (id) => {
+    return async (dispatch) => {
+        try {
+            await deleteOrderApi(dispatch, id);
+            dispatch(successNotify({ message: "Order Deleted Successfully" }));
+            dispatch(fetchPendingOrdersList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+
+export const approveOrder = (id) => {
+    return async (dispatch) => {
+        try {
+            await approveOrderApi(dispatch, id);
+            dispatch(successNotify({ message: "Order sent" }));
+            // dispatch(fetchPendingOrdersList());
+        } catch (error) {
+            dispatch(errorNotify({ message: error.message }));
+        }
+    };
+};
+
+
+export const fetchPreBookedOrder = () => {
+    return async (dispatch) => {
+        try {
+            await fetchPreBookedOrderApi(dispatch);
         } catch (error) {
             dispatch(errorNotify({ message: error.message }));
         }

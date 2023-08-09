@@ -27,6 +27,13 @@ const orderSChema = mongoose.Schema({
         required: true,
         default: false,
     },
+    orderType: {
+        type: String,
+        required: true,
+        index: true,
+        default: "REGULAR",
+        enums: ["REGULAR", "PRE_BOOKED"]
+    },
     message: String
 
 })

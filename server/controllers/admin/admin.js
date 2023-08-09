@@ -90,14 +90,14 @@ export const deleteProductById = async (req, res) => {
 
 
 export const getPendingOrders = async (req, res) => {
-    const { key = "PENDING" } = req.params;
+    const { key = "" } = req.params;
     try {
         const orders = await Orders.find({ status: key })
             .populate({
                 path: 'productId',
                 select: 'title price thumbnail',
             })
-            .select('date status');
+            .select('id date status');
 
         if (orders.length === 0) {
             return res.status(404).json({ message: "No orders found" });
@@ -105,9 +105,10 @@ export const getPendingOrders = async (req, res) => {
 
         const formattedOrders = (
             orders.map((order) => {
-                const { productId, date, status, studentId } = order;
+                const { productId, date, status, studentId, _id } = order;
                 const { title, price, thumbnail } = productId;
                 return {
+                    id: _id,
                     studentId,
                     title,
                     price,
@@ -139,11 +140,11 @@ export const getDashboardStats = async (req, res) => {
         const productCount = await Products.countDocuments()
         const pendingOrder = await Orders.countDocuments({ status: "PENDING" });
         const orderInTransit = await Orders.countDocuments({ status: "ON_TRANSIT" });
-        const deliveryPending = await Orders.countDocuments({ status: "OUT_FOR_DELIVERY", deliveredStatus: false });
+        const deliveryPending = await Orders.countDocuments({ status: "ORDER_PLACED" });
         const delivered = await Orders.countDocuments({ deliveredStatus: true });
-        console.log("delivered", delivered)
+        console.log("deliveryPending", deliveryPending)
         const approvalPending = await Student.find({ approvedStatus: false });
-        const data = { userCount, studentCount, productCount, pendingOrder, orderInTransit, deliveryPending: deliveryPending.length, delivered: delivered.length, approvalPending: approvalPending.length }
+        const data = { userCount, studentCount, productCount, pendingOrder, orderInTransit, deliveryPending: deliveryPending, delivered: delivered.length, approvalPending: approvalPending.length }
         res.status(200).json({ data });
     } catch (error) {
         res.status(500).json({ message: "Something went wrong" });
@@ -243,6 +244,66 @@ export const deleteUser = async (req, res) => {
         await User.deleteOne({ _id: student.user })
         await Student.deleteOne({ _id: id })
         res.status(200).json({ data: true, message: "Deleted" });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
+
+
+export const deleteOrder = async (req, res) => {
+    const { id } = req.params
+    try {
+        await Orders.deleteOne({ _id: id });
+        res.status(200).json({ data: true, message: "Deleted" });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
+
+
+export const approveOrder = async (req, res) => {
+    const { id } = req.params
+    try {
+        const order = await Orders.findOneAndUpdate({ _id: id }, { $set: { status: "ORDER_PLACED" } });
+        if (!order) return res.status(400).json({ message: "update failed" });
+        res.status(200).json({ data: true, message: "Approved" });
+    } catch (error) {
+        res.status(500).json({ message: error.message || "Something went wrong" });
+    }
+};
+
+
+export const getPreBookedOrders = async (req, res) => {
+    const { key = "" } = req.params;
+    try {
+        const orders = await Orders.find({ orderType: "PRE_BOOKED" })
+            .populate({
+                path: 'productId',
+                select: 'title price thumbnail',
+            })
+            .select('id date status');
+
+        if (orders.length === 0) {
+            return res.status(400).json({ message: "No orders found" });
+        }
+
+        const formattedOrders = (
+            orders.map((order) => {
+                const { productId, date, status, studentId, _id } = order;
+                const { title, price, thumbnail } = productId;
+                return {
+                    id: _id,
+                    studentId,
+                    title,
+                    price,
+                    date,
+                    status,
+                    thumbnail,
+                };
+            })
+        );
+
+        res.status(200).json({ data: formattedOrders });
     } catch (error) {
         res.status(500).json({ message: error.message || "Something went wrong" });
     }
