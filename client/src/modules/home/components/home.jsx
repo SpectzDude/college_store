@@ -9,7 +9,7 @@ import { buyNow, fetchProductList, fetchStudentProfile, preOrder } from "../acti
 import { getProducts } from "../selectors";
 import Overlay from "./OverLay";
 import { STATE_REDUCER_KEY } from "../constants";
-
+import Swal from "sweetalert2";
 const UserHome = (props) => {
     const { items = [], fetchProductListAsync, fetchStudentAsync } = props;
     const theme = useTheme();
@@ -22,12 +22,35 @@ const UserHome = (props) => {
         fetchStudentAsync();
     }, []);
     const handleBuyNow = ({ item, buyOption }) => {
-        if (buyOption) {
+        if (!buyOption) {
             let data = { ...item, orderType: orderType[0] };
-            dispatch(buyNow(data));
+            Swal.fire({
+                title: "Do you want pre book the product?",
+                showDenyButton: true,
+                confirmButtonText: "Order Now"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    dispatch(preOrder(data));
+                    Swal.fire("Ordered!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Order cancel", "", "info");
+                }
+            });
         } else {
             let data = { ...item, orderType: orderType[1] };
-            dispatch(preOrder(data));
+            Swal.fire({
+                title: "Do you want Buy the product?",
+                showDenyButton: true,
+                confirmButtonText: "Buy Now"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    dispatch(buyNow(data));
+                    Swal.fire("Ordered!", "", "success");
+                } else if (result.isDenied) {
+                    Swal.fire("Order cancel", "", "info");
+                }
+            });
         }
     };
     return <Box>
