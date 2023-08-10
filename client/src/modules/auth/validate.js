@@ -7,7 +7,7 @@ export const registrationSchema = Yup.object().shape({
     phoneNumber: Yup.string().required("Phone Number is required"),
     collegeId: Yup.string()
         .required("College ID is required")
-        .matches(/^MACET[A-Za-z0-9]*$/, "College ID should start with MACET"),
+        .matches(/^MCC[A-Za-z0-9]*$/, "College ID should start with MCC"),
     password: Yup.string().required("Password is required"),
     confirmPassword: Yup.string()
         .oneOf([Yup.ref("password"), null], "Passwords do not match")
