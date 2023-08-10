@@ -25,11 +25,12 @@ const UserHome = (props) => {
         if (!buyOption) {
             let data = { ...item, orderType: orderType[0] };
             Swal.fire({
-                title: "Do you want pre book the product?",
+                title: "Confirm pre book the product?",
                 showDenyButton: true,
                 confirmButtonText: "Order Now"
             }).then((result) => {
                 if (result.isConfirmed) {
+
                     dispatch(preOrder(data));
                     Swal.fire("Ordered!", "", "success");
                 } else if (result.isDenied) {
